@@ -8,6 +8,10 @@
 
 [English](README.en.md) · [Guia](docs/pt-BR/guia.md) · [Segurança](SEGURANCA.md) · [Compatibilidade](COMPATIBILIDADE.md)
 
+[![Licença: AGPL-3.0-only](https://img.shields.io/badge/licen%C3%A7a-AGPL--3.0--only-purple)](LICENSE) [![Versão](https://img.shields.io/github/v/release/Awerkori/nox-extension-developer)](https://github.com/Awerkori/nox-extension-developer/releases) [![CI](https://github.com/Awerkori/nox-extension-developer/actions/workflows/ci.yml/badge.svg)](https://github.com/Awerkori/nox-extension-developer/actions/workflows/ci.yml)
+
+**Navegação:** [Ecossistemas](#ecossistemas) · [Instalação](#instalação) · [Dependências](docs/pt-BR/dependencias.md) · [Android SDK](docs/pt-BR/android-sdk.md) · [Exemplos](#exemplos) · [Comunidade](#comunidade-e-licença)
+
 ## Ecossistemas
 
 | Conteúdo | App de referência | Projeto de fontes | Entrega típica |
@@ -17,6 +21,17 @@
 | Novels | [LNReader](https://github.com/LNReader/lnreader) | [LNReader plugins](https://github.com/LNReader/lnreader-plugins) | Bundle de plugin JavaScript |
 
 Formatos e compatibilidade dependem das versões do app e do repositório. A skill não distribui APKs nem bundles de terceiros.
+
+## Compatibilidade
+
+| Ambiente | Estado |
+|---|---|
+| OpenCode + Arch Linux | Testado |
+| OpenCode + outras distribuições Linux | Não homologado |
+| OpenCode + Windows/macOS | Não testado; Windows nativo requer WSL para os scripts atuais |
+| Codex, Claude Code, Google Antigravity, Hermes Agent e outros | Não testados |
+
+Agent Skills é um formato compartilhado, não uma garantia de compatibilidade. Confira [detalhes](COMPATIBILIDADE.md) e [dependências](docs/pt-BR/dependencias.md).
 
 ## O que faz
 
@@ -33,7 +48,9 @@ Formatos e compatibilidade dependem das versões do app e do repositório. A ski
 npx skills add Awerkori/nox-extension-developer
 ```
 
-A descoberta e a cópia da skill foram verificadas com `skills` 1.8.1 a partir de uma cópia local. Revise a origem e os destinos propostos antes de autorizar alterações. A instalação a partir deste repositório remoto depende de sua disponibilidade.
+Para instalar globalmente no OpenCode: `npx skills add Awerkori/nox-extension-developer --global --agent opencode`. NPX instala a skill, não o Android SDK nem as dependências de desenvolvimento.
+
+A instalação do repositório público e o carregamento da cópia instalada foram verificados no OpenCode + Arch Linux com `skills` 1.8.1. A listagem pode exibir `Agents: not linked` para uma instalação universal em `.agents/skills`, mesmo quando o OpenCode encontra a skill. Confira em uma nova sessão; isso não garante descoberta em todos os agentes.
 
 ### Instalação local no OpenCode
 
@@ -73,6 +90,19 @@ python3 -m unittest discover -s tests -v
 
 ## Exemplos
 
+Criação e correção, respectivamente:
+
+```text
+Crie uma extensão de mangá seguindo o padrão Keiyoushi para o Mihon deste site: [URL].
+Corrija esta extensão seguindo o padrão Keiyoushi: [LINK DO CÓDIGO]. Os capítulos não aparecem e as páginas não carregam.
+
+Crie uma extensão de anime seguindo o padrão Yuzono para o Aniyomi deste site: [URL].
+Corrija esta extensão seguindo o padrão Yuzono: [LINK DO CÓDIGO]. Os episódios não carregam e os vídeos não reproduzem.
+
+Crie uma extensão de novel para o LNReader deste site: [URL].
+Corrija esta extensão para o LNReader: [LINK DO CÓDIGO]. A pesquisa não retorna resultados e os capítulos não carregam.
+```
+
 - `Use nox-extension-developer para corrigir esta extensão Keiyoushi sem migrar sua API.`
 - `Use nox-extension-developer para revisar a resolução de vídeos desta fonte Yuzono.`
 - `Use nox-extension-developer para criar um plugin LNReader para <URL>, respeitando as regras do site.`
@@ -107,7 +137,7 @@ Para uma instalação pela CLI, execute `npx skills remove nox-extension-develop
 
 ## Comunidade e licença
 
-Leia [CONTRIBUTING.md](CONTRIBUTING.md) e [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Após publicação, use [issues](https://github.com/Awerkori/nox-extension-developer/issues) para bugs e propostas e [discussions](https://github.com/Awerkori/nox-extension-developer/discussions) para dúvidas, se disponíveis. Para vulnerabilidades, consulte [SECURITY.md](SECURITY.md); o canal público ainda precisa ser definido.
+Leia [CONTRIBUTING.md](CONTRIBUTING.md) e [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Use [issues](https://github.com/Awerkori/nox-extension-developer/issues) para bugs e propostas e [discussions](https://github.com/Awerkori/nox-extension-developer/discussions) para dúvidas. Para vulnerabilidades, consulte [SECURITY.md](SECURITY.md) e use o reporte privado do GitHub.
 
 Licença: **AGPL-3.0-only**, conforme [LICENSE](LICENSE). Referências de terceiros mantêm suas próprias licenças; veja [ATRIBUICOES.md](ATRIBUICOES.md). Project Nox não é afiliado aos projetos citados.
 

@@ -1,6 +1,8 @@
 # Compatibilidade
 
-Codex, Claude Code e Google Antigravity: **COMPATIBILIDADE PREPARADA, MAS NÃO TESTADA**. O suporte de execução dos scripts foi testado apenas em Linux; Windows não foi verificado.
+O ambiente efetivamente testado foi OpenCode + Arch Linux. Outras distribuições Linux não foram homologadas. Windows e macOS não foram testados. Codex, Claude Code, Google Antigravity, Hermes Agent e outros agentes não foram testados.
+
+Windows nativo não é suportado pelo script `references.py`: ele importa `fcntl` e usa mecanismos POSIX de processo. No Windows, use WSL com uma distribuição Linux e instale o agente e as dependências dentro do WSL. macOS tem interfaces POSIX, mas não foi testado.
 
 | Plataforma | Diretório de skills de usuário | Estado |
 |---|---|---|
@@ -8,6 +10,7 @@ Codex, Claude Code e Google Antigravity: **COMPATIBILIDADE PREPARADA, MAS NÃO T
 | Codex | `~/.agents/skills/` | Caminho e suporte a links documentados no código oficial; instalação e execução não testadas. |
 | Claude Code | `~/.claude/skills/` | Caminho de usuário documentado; links e execução não testados. |
 | Google Antigravity | `~/.gemini/antigravity/skills/` | Caminho relatado pela documentação consultada; links e execução não testados. |
+| Hermes Agent | Consulte a documentação oficial do agente | Não testado. |
 
 Para preparar outro agente: confirme documentação e instalação locais, crie o diretório de skills pelo fluxo oficial da plataforma se necessário, e execute `python3 scripts/install.py codex`, `claude` ou `antigravity`. O instalador não cria diretórios de plataformas ausentes, não valida a versão instalada nem confirma se cada agente segue links. Retire o link criado se a plataforma não o reconhecer. Não instale múltiplos links em locais que o mesmo agente percorra simultaneamente sem verificar duplicação.
 
