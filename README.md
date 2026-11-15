@@ -34,100 +34,215 @@ O Gradle Wrapper e outras ferramentas podem acompanhar o projeto. Não é necess
 
 ## 💻 Instalação das dependências
 
-Abra a seção do seu sistema. Instale apenas ferramentas ausentes e peça ajuda à IA se algum comando falhar. Operações com `sudo` pedem senha e alteram o computador.
+### Etapa 1 — 📦 Instalação das dependências básicas
 
-**Etapa 1:** instale Git, Python e Node. **Etapa 2:** prepare Android para mangá/anime ou as dependências locais para novels. **Etapa 3:** instale a skill por NPX ou pelo prompt abaixo. Antes de trocar uma versão existente, confira `node --version`; `skills` 1.8.1 requer Node.js 22.20.0 ou superior. Recomendamos Node.js 24 LTS.
+**👇 Clique no nome do seu sistema operacional para expandir o tutorial de instalação.**
 
-Os comandos das distribuições podem oferecer Node antigo. Caso `node --version` seja inferior a 22.20.0, instale Node 24 pelo [instalador oficial](https://nodejs.org/en/download) e abra um novo terminal. Não sobrescreva uma instalação existente sem revisá-la.
+<details>
+<summary>🪟 Windows — Clique para expandir</summary>
 
-No Linux, WSL ou macOS, uma alternativa é instalar Node 24 no usuário com [nvm](https://github.com/nvm-sh/nvm):
+Abra o PowerShell e execute `wsl --install`. Reinicie se necessário e abra o Ubuntu instalado. Execute os próximos comandos **no terminal Ubuntu do WSL**; Windows nativo não é suportado. WSL não foi homologado.
 
 ```bash
-# Se ~/.nvm já existir, use a instalação existente; não a substitua.
+sudo apt update && sudo apt install git python3 nodejs npm curl unzip ca-certificates
+```
+
+Verifique as ferramentas:
+
+```bash
+git --version && python3 --version && node --version && npm --version && npx --version
+```
+
+O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
+
+```bash
 if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
 export NVM_DIR="$HOME/.nvm"
 . "$NVM_DIR/nvm.sh"
 nvm install 24
 nvm use 24
-node --version
-npm --version
-npx --version
+node --version && npm --version && npx --version
 ```
 
-Para carregar o nvm em novos terminais Bash, adicione `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` apenas depois de conferir que não existem entradas equivalentes. No Zsh use `~/.zshrc`.
+Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
 
-Para novels, execute `npm install` na pasta do projeto LNReader, normalmente com ajuda da IA. TypeScript e bibliotecas são instalados conforme o `package.json` do projeto. Para mangá/anime, use `./gradlew` do repositório: Gradle, Kotlin e suas dependências são resolvidos pelo sistema de build; não instale Gradle ou Kotlin globalmente sem necessidade. ADB e emulador são opcionais para testes em dispositivos.
+</details>
 
-<details><summary>🐧 Arch Linux</summary>
+<details>
+<summary>🍎 macOS — Clique para expandir</summary>
 
-Abra o Terminal e execute:
+Abra o Terminal. Se faltar Git, execute `xcode-select --install`. Instale Python 3 pelo [instalador oficial](https://www.python.org/downloads/) e Node 24 LTS pelo [instalador oficial](https://nodejs.org/en/download). Esta plataforma não foi homologada.
+
+Verifique as ferramentas:
+
+```bash
+git --version && python3 --version && node --version && npm --version && npx --version
+```
+
+O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
+
+```bash
+if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+nvm install 24
+nvm use 24
+node --version && npm --version && npx --version
+```
+
+Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
+
+</details>
+
+<details>
+<summary>🐧 Arch Linux — Clique para expandir</summary>
+
+Abra o Terminal e instale somente pacotes ausentes:
 
 ```bash
 sudo pacman -S --needed git python nodejs npm curl unzip
 ```
 
-Para mangá ou anime, instale o JDK exigido pelo projeto, por exemplo `sudo pacman -S --needed jdk21-openjdk` quando ele exigir Java 21. No bloco Android abaixo, instale Command-line Tools, plataforma e Build Tools conforme o projeto. Para novels, siga `npm install` acima.
-
-</details>
-
-<details><summary>🐧 Ubuntu ou Debian</summary>
-
-Abra o Terminal e execute:
+Verifique as ferramentas:
 
 ```bash
-sudo apt update
-sudo apt install git python3 nodejs npm curl unzip ca-certificates
+git --version && python3 --version && node --version && npm --version && npx --version
 ```
 
-Para mangá ou anime, se o projeto exigir Java 21 e o pacote existir em sua distribuição, execute `sudo apt install openjdk-21-jdk`. Para outra versão, consulte os pacotes da distribuição. Use o bloco Android abaixo. Para novels, siga `npm install` acima. Procedimento não testado nesta distribuição.
+O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
+
+```bash
+if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+nvm install 24
+nvm use 24
+node --version && npm --version && npx --version
+```
+
+Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
 
 </details>
 
-<details><summary>🐧 Fedora</summary>
+<details>
+<summary>🐧 Ubuntu — Clique para expandir</summary>
 
-Abra o Terminal e execute:
+Abra o Terminal e instale somente pacotes ausentes:
+
+```bash
+sudo apt update && sudo apt install git python3 nodejs npm curl unzip ca-certificates
+```
+
+Não homologado nesta distribuição.
+
+Verifique as ferramentas:
+
+```bash
+git --version && python3 --version && node --version && npm --version && npx --version
+```
+
+O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
+
+```bash
+if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+nvm install 24
+nvm use 24
+node --version && npm --version && npx --version
+```
+
+Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
+
+</details>
+
+<details>
+<summary>🐧 Debian — Clique para expandir</summary>
+
+Abra o Terminal e instale somente pacotes ausentes:
+
+```bash
+sudo apt update && sudo apt install git python3 nodejs npm curl unzip ca-certificates
+```
+
+Não homologado nesta distribuição.
+
+Verifique as ferramentas:
+
+```bash
+git --version && python3 --version && node --version && npm --version && npx --version
+```
+
+O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
+
+```bash
+if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+nvm install 24
+nvm use 24
+node --version && npm --version && npx --version
+```
+
+Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
+
+</details>
+
+<details>
+<summary>🐧 Fedora — Clique para expandir</summary>
+
+Abra o Terminal e instale somente pacotes ausentes:
 
 ```bash
 sudo dnf install git python3 nodejs npm curl unzip coreutils
 ```
 
-Para mangá ou anime, quando o projeto exigir Java 21, execute `sudo dnf install java-21-openjdk-devel`. Para outra versão, consulte os pacotes disponíveis. Use o bloco Android abaixo. Para novels, siga `npm install` acima. Procedimento não testado nesta distribuição.
+Não homologado nesta distribuição.
 
-</details>
-
-<details><summary>🪟 Windows</summary>
-
-Os scripts de referências não funcionam no Windows nativo. No PowerShell, execute `wsl --install`, reinicie se solicitado e abra Ubuntu pelo menu Iniciar. Dentro do WSL, execute `sudo apt update && sudo apt install git python3 nodejs npm curl unzip ca-certificates`; verifique a versão do Node e instale Node 24 LTS se necessário. Para mangá/anime com Java 21, execute `sudo apt install openjdk-21-jdk` e use o bloco Android abaixo dentro do WSL. Para novels, use `npm install` no projeto. Instale sua IA no mesmo ambiente. Windows/WSL não foi homologado.
-
-</details>
-
-<details><summary>🍎 macOS</summary>
-
-Abra o Terminal. Instale [Git](https://git-scm.com/downloads), [Python 3](https://www.python.org/downloads/) e [Node.js 24 LTS](https://nodejs.org/en/download) pelos instaladores oficiais. Para mangá ou anime, caso use Homebrew e o projeto exija Java 21, execute `brew install --cask temurin@21`; abra um novo terminal e confira `java -version`. Use o bloco Android abaixo com as ferramentas macOS. Para novels, siga `npm install` no projeto. Procedimento não testado no macOS.
-
-</details>
-
-Verifique as ferramentas instaladas no terminal:
+Verifique as ferramentas:
 
 ```bash
-git --version
-python3 --version
-node --version
-npm --version
+git --version && python3 --version && node --version && npm --version && npx --version
 ```
 
-Para mangá ou anime, verifique também `java -version`, `javac -version` e `sdkmanager --list`. As versões Android dependem do projeto; não aceite licenças sem revisá-las. [Instruções detalhadas e solução de problemas](docs/pt-BR/guia.md).
+O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
 
-### Etapa 2 — Android SDK para mangá e anime
+```bash
+if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+nvm install 24
+nvm use 24
+node --version && npm --version && npx --version
+```
 
-Se você já possui `sdkmanager`, reutilize-o e pule o download. Caso contrário, baixe as **Command-line Tools** oficiais para seu sistema na [página Android](https://developer.android.com/studio#command-line-tools-only), confira o SHA-256 publicado e extraia o diretório `cmdline-tools` como `latest` dentro de `~/Android/Sdk/cmdline-tools/` (no WSL, dentro do Linux). Não substitua uma pasta `latest` existente. No Linux/WSL, o bloco abaixo baixa a versão 15859902 cujo checksum foi conferido na página oficial; se o destino já existir, pare e use sua instalação:
+Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
+
+</details>
+
+### Etapa 2 — 🤖 Instalação do Android SDK
+
+**Esta etapa é necessária para desenvolver extensões de mangá e anime. Se você deseja desenvolver apenas novels, pode pular esta etapa.**
+
+**👇 Clique no seu sistema operacional para visualizar o tutorial completo do Android SDK.**
+
+<details>
+<summary>🪟 Windows (via WSL) — Clique para expandir</summary>
+
+Execute no terminal Ubuntu do WSL, não no PowerShell. WSL não foi homologado. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
+
+```bash
+sudo apt install openjdk-21-jdk
+```
+
+2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
 
 ```bash
 (
 set -eu
 SDK="$HOME/Android/Sdk"
-test ! -e "$SDK/cmdline-tools/latest" || { echo "SDK existente: preserve e reutilize"; exit 1; }
-test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Arquivos existentes: preserve e revise"; exit 1; }
+test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
+test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
 mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
 curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
 echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
@@ -136,7 +251,7 @@ mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
 )
 ```
 
-No macOS, baixe o ZIP para seu processador pela página oficial; no Terminal execute `shasum -a 256 ~/Downloads/commandlinetools-*.zip` e compare o resultado com a página. Em seguida execute `mkdir -p ~/Android/Sdk/cmdline-tools`, extraia o ZIP com `unzip` nesse diretório e renomeie a pasta extraída `cmdline-tools` para `latest` somente se `latest` não existir. No Terminal Linux/WSL ou macOS:
+3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
 
 ```bash
 export ANDROID_HOME="$HOME/Android/Sdk"
@@ -145,15 +260,247 @@ sdkmanager --sdk_root="$ANDROID_HOME" --list
 sdkmanager --sdk_root="$ANDROID_HOME" --licenses
 ```
 
-Leia e aceite as licenças pessoalmente. Verifique as versões no projeto; por exemplo, para um projeto que exige API 37.0 e Build Tools 37.0.0:
+4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
 
 ```bash
 sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
+java -version && javac -version
+sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
 ```
 
-Para usar ADB, instale opcionalmente `sdkmanager --sdk_root="$ANDROID_HOME" 'platform-tools'` e execute `adb version`. Acrescente as duas linhas `export` acima a `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh) **somente após verificar que não conflitam com configurações existentes**, e abra outro terminal. Não modifique arquivos de configuração automaticamente. Emulador é opcional.
+Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
 
-## 📥 Como instalar a skill
+</details>
+
+<details>
+<summary>🍎 macOS — Clique para expandir</summary>
+
+macOS não foi homologado. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
+
+```bash
+brew install --cask temurin@21
+```
+
+2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, baixe o ZIP **Command-line Tools para macOS** do seu processador na [página oficial](https://developer.android.com/studio#command-line-tools-only). Execute `shasum -a 256 ~/Downloads/commandlinetools-*.zip` e compare com o SHA-256 publicado pelo Google. Não continue se for diferente. No Terminal, ajuste `ARQUIVO` para o nome exato baixado e execute; o bloco não substitui uma pasta existente:
+
+```bash
+(
+set -eu
+ARQUIVO="$HOME/Downloads/commandlinetools-mac.zip" # ajuste para o nome baixado / set downloaded name
+SDK="$HOME/Android/Sdk"
+test ! -e "$SDK/cmdline-tools/latest" && test ! -e "$SDK/cmdline-tools/cmdline-tools" || { echo "Existing files: preserve and review"; exit 1; }
+mkdir -p "$SDK/cmdline-tools"
+unzip -q "$ARQUIVO" -d "$SDK/cmdline-tools"
+mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
+)
+```
+
+3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+sdkmanager --sdk_root="$ANDROID_HOME" --list
+sdkmanager --sdk_root="$ANDROID_HOME" --licenses
+```
+
+4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
+
+```bash
+sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
+java -version && javac -version
+sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
+```
+
+Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
+
+</details>
+
+<details>
+<summary>🐧 Arch Linux — Clique para expandir</summary>
+
+1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
+
+```bash
+sudo pacman -S --needed jdk21-openjdk
+```
+
+2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
+
+```bash
+(
+set -eu
+SDK="$HOME/Android/Sdk"
+test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
+test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
+mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
+curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
+echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
+unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
+mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
+)
+```
+
+3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+sdkmanager --sdk_root="$ANDROID_HOME" --list
+sdkmanager --sdk_root="$ANDROID_HOME" --licenses
+```
+
+4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
+
+```bash
+sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
+java -version && javac -version
+sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
+```
+
+Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
+
+</details>
+
+<details>
+<summary>🐧 Ubuntu — Clique para expandir</summary>
+
+Não homologado nesta distribuição. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
+
+```bash
+sudo apt install openjdk-21-jdk
+```
+
+2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
+
+```bash
+(
+set -eu
+SDK="$HOME/Android/Sdk"
+test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
+test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
+mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
+curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
+echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
+unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
+mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
+)
+```
+
+3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+sdkmanager --sdk_root="$ANDROID_HOME" --list
+sdkmanager --sdk_root="$ANDROID_HOME" --licenses
+```
+
+4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
+
+```bash
+sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
+java -version && javac -version
+sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
+```
+
+Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
+
+</details>
+
+<details>
+<summary>🐧 Debian — Clique para expandir</summary>
+
+Não homologado nesta distribuição. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
+
+```bash
+sudo apt install openjdk-21-jdk
+```
+
+2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
+
+```bash
+(
+set -eu
+SDK="$HOME/Android/Sdk"
+test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
+test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
+mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
+curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
+echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
+unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
+mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
+)
+```
+
+3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+sdkmanager --sdk_root="$ANDROID_HOME" --list
+sdkmanager --sdk_root="$ANDROID_HOME" --licenses
+```
+
+4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
+
+```bash
+sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
+java -version && javac -version
+sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
+```
+
+Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
+
+</details>
+
+<details>
+<summary>🐧 Fedora — Clique para expandir</summary>
+
+Não homologado nesta distribuição. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
+
+```bash
+sudo dnf install java-21-openjdk-devel
+```
+
+2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
+
+```bash
+(
+set -eu
+SDK="$HOME/Android/Sdk"
+test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
+test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
+mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
+curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
+echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
+unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
+mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
+)
+```
+
+3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+sdkmanager --sdk_root="$ANDROID_HOME" --list
+sdkmanager --sdk_root="$ANDROID_HOME" --licenses
+```
+
+4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
+
+```bash
+sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
+java -version && javac -version
+sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
+```
+
+Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
+
+</details>
+
+## Etapa 3 — 📥 Instalação da skill
 
 ### Método 1 — Peça à sua IA ⭐ (Recomendado)
 
