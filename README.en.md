@@ -195,10 +195,16 @@ Create a manga extension following the Keiyoushi standard for Mihon for this sit
 
 ### 📚 Manga — fix
 ```text
-Fix this extension following the Keiyoushi standard: [CODE LINK].
+Fix a manga extension following the Keiyoushi standard.
 
+Repository: [LINK TO THE KEIYOUSHI OR PROJECT NOX REPOSITORY]
+Extension name: [EXTENSION NAME]
+
+Problem:
 Chapters do not appear and pages do not load.
 ```
+
+Repositories: [Keiyoushi](https://github.com/keiyoushi/extensions-source) · [Project Nox](https://github.com/Awerkori/manga-fonte-extensoes). Choose a repository, provide the extension name, and describe the problem; the AI can locate the source code.
 
 ### 🎬 Anime — create
 ```text
@@ -207,10 +213,16 @@ Create an anime extension following the Yuzono standard for Aniyomi for this sit
 
 ### 🎬 Anime — fix
 ```text
-Fix this extension following the Yuzono standard: [CODE LINK].
+Fix an anime extension following the Yuzono standard.
 
+Repository: [LINK TO THE YUZONO OR PROJECT NOX REPOSITORY]
+Extension name: [EXTENSION NAME]
+
+Problem:
 Episodes do not load and videos do not play.
 ```
+
+Repositories: [Yuzono](https://github.com/yuzono/anime-extensions) · [Project Nox](https://github.com/Awerkori/anime-fonte-extensoes). Choose a repository, provide the extension name, and describe the problem; the AI can locate the source code.
 
 ### 📖 Novel — create
 ```text
@@ -219,10 +231,16 @@ Create a novel extension for LNReader for this site: [SITE URL].
 
 ### 📖 Novel — fix
 ```text
-Fix this LNReader extension: [CODE LINK].
+Fix a novel extension following the LNReader standard.
 
+Repository: [LINK TO THE LNREADER REPOSITORY]
+Extension name: [EXTENSION NAME]
+
+Problem:
 Search does not work and chapters do not load.
 ```
+
+Repository: [LNReader](https://github.com/LNReader/lnreader-plugins). Provide the repository, extension name, and problem; the AI can locate the source code.
 
 To update an extension, provide its code and ask the AI to preserve compatibility. Ask for the APK or bundle path and testing instructions. Review the result and use only authorized sources.
 

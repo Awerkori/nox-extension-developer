@@ -195,10 +195,16 @@ Crie uma extensão de mangá seguindo o padrão Keiyoushi para o Mihon deste sit
 
 ### 📚 Mangá — corrigir
 ```text
-Corrija esta extensão seguindo o padrão Keiyoushi: [LINK DO CÓDIGO].
+Corrija uma extensão de mangá seguindo o padrão Keiyoushi.
 
+Repositório: [LINK DO REPOSITÓRIO DO KEIYOUSHI OU PROJECT NOX]
+Nome da extensão: [NOME DA EXTENSÃO]
+
+Problema:
 Os capítulos não aparecem e as páginas não carregam.
 ```
+
+Repositórios: [Keiyoushi](https://github.com/keiyoushi/extensions-source) · [Project Nox](https://github.com/Awerkori/manga-fonte-extensoes). Escolha o repositório, informe o nome da extensão e descreva o problema; a IA poderá localizar o código-fonte.
 
 ### 🎬 Anime — criar
 ```text
@@ -207,10 +213,16 @@ Crie uma extensão de anime seguindo o padrão Yuzono para o Aniyomi deste site:
 
 ### 🎬 Anime — corrigir
 ```text
-Corrija esta extensão seguindo o padrão Yuzono: [LINK DO CÓDIGO].
+Corrija uma extensão de anime seguindo o padrão Yuzono.
 
+Repositório: [LINK DO REPOSITÓRIO DO YUZONO OU PROJECT NOX]
+Nome da extensão: [NOME DA EXTENSÃO]
+
+Problema:
 Os episódios não carregam e os vídeos não reproduzem.
 ```
+
+Repositórios: [Yuzono](https://github.com/yuzono/anime-extensions) · [Project Nox](https://github.com/Awerkori/anime-fonte-extensoes). Escolha o repositório, informe o nome da extensão e descreva o problema; a IA poderá localizar o código-fonte.
 
 ### 📖 Novel — criar
 ```text
@@ -219,10 +231,16 @@ Crie uma extensão de novel para o LNReader deste site: [URL DO SITE].
 
 ### 📖 Novel — corrigir
 ```text
-Corrija esta extensão para o LNReader: [LINK DO CÓDIGO].
+Corrija uma extensão de novel seguindo o padrão LNReader.
 
+Repositório: [LINK DO REPOSITÓRIO DO LNREADER]
+Nome da extensão: [NOME DA EXTENSÃO]
+
+Problema:
 A pesquisa não funciona e os capítulos não carregam.
 ```
+
+Repositório: [LNReader](https://github.com/LNReader/lnreader-plugins). Informe o repositório, o nome da extensão e o problema; a IA poderá localizar o código-fonte.
 
 Para atualizar uma extensão, envie seu código e peça à IA que preserve a compatibilidade. Peça o caminho do APK ou bundle e instruções para testá-lo. Revise o resultado e use somente fontes autorizadas.
 
