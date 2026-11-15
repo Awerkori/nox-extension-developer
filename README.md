@@ -155,7 +155,20 @@ Para usar ADB, instale opcionalmente `sdkmanager --sdk_root="$ANDROID_HOME" 'pla
 
 ## 📥 Como instalar a skill
 
-### Método 1 — terminal
+### Método 1 — Peça à sua IA ⭐ (Recomendado)
+
+Sua IA verificará as dependências, ajudará na instalação e configurará a skill mediante sua autorização. Abra sua IA agêntica, copie o texto abaixo, envie e autorize apenas as operações com as quais concordar:
+
+```text
+Instale e configure a skill Nox Extension Developer:
+https://github.com/Awerkori/nox-extension-developer
+
+Consulte a documentação oficial e identifique meu sistema operacional e minha IA. Pergunte se desejo trabalhar com mangá, anime, novels ou todos. Verifique as ferramentas existentes e instale somente as necessárias, incluindo Java e Android SDK apenas quando aplicável. Solicite minha autorização antes de instalações, operações administrativas ou aceite de licenças. Não sobrescreva configurações nem exponha credenciais. Instale a skill via NPX, confirme sua descoberta em uma nova sessão e explique como criar, corrigir ou atualizar uma extensão.
+```
+
+[Baixar prompt em português](prompts/install-pt-BR.txt) · [English prompt](prompts/install-en.txt) · [Instalação manual](docs/pt-BR/guia.md#instalação)
+
+### Método 2 — Instalação manual via NPX
 
 Abra um terminal e execute:
 
@@ -170,19 +183,6 @@ npx skills add Awerkori/nox-extension-developer --global --agent opencode
 ```
 
 Abra uma nova sessão da IA e peça: `Use a skill nox-extension-developer`. Confira se ela informa que carregou a skill. Para instalar em outro agente, consulte as opções de `npx skills add --help` e escolha o identificador correspondente. O instalador e as cópias locais podem usar pastas diferentes; consulte o destino informado na tela.
-
-### Método 2 — peça à sua IA ⭐
-
-Abra sua IA agêntica, copie o texto abaixo, envie e autorize apenas as operações com as quais concordar:
-
-```text
-Instale e configure a skill Nox Extension Developer:
-https://github.com/Awerkori/nox-extension-developer
-
-Consulte a documentação oficial e identifique meu sistema operacional e minha IA. Pergunte se desejo trabalhar com mangá, anime, novels ou todos. Verifique as ferramentas existentes e instale somente as necessárias, incluindo Java e Android SDK apenas quando aplicável. Solicite minha autorização antes de instalações, operações administrativas ou aceite de licenças. Não sobrescreva configurações nem exponha credenciais. Instale a skill via NPX, confirme sua descoberta em uma nova sessão e explique como criar, corrigir ou atualizar uma extensão.
-```
-
-[Baixar prompt em português](prompts/install-pt-BR.txt) · [English prompt](prompts/install-en.txt) · [Instalação manual](docs/pt-BR/guia.md#instalação)
 
 ## 🚀 Como utilizar na prática
 

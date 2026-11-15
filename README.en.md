@@ -155,7 +155,20 @@ To use ADB, optionally install `sdkmanager --sdk_root="$ANDROID_HOME" 'platform-
 
 ## 📥 Install the skill
 
-### Method 1 — terminal
+### Method 1 — Ask your AI ⭐ (Recommended)
+
+Your AI will check dependencies, assist with installation, and configure the skill with your permission. Open your agentic AI, copy the text below, send it, and authorize only the operations you agree to:
+
+```text
+Install and configure the Nox Extension Developer skill:
+https://github.com/Awerkori/nox-extension-developer
+
+Consult the official documentation and identify my operating system and AI agent. Ask whether I want to work with manga, anime, novels, or all of them. Check existing tools and install only what is needed, including Java and Android SDK only when applicable. Ask permission before installations, privileged operations, or accepting licenses. Do not overwrite settings or expose credentials. Install the skill using NPX, verify discovery in a new session, and explain how to create, fix, or update an extension.
+```
+
+[Download English prompt](prompts/install-en.txt) · [Prompt em português](prompts/install-pt-BR.txt) · [Manual installation](docs/en/guide.md#installation)
+
+### Method 2 — Manual installation via NPX
 
 Open a terminal and run:
 
@@ -170,19 +183,6 @@ npx skills add Awerkori/nox-extension-developer --global --agent opencode
 ```
 
 Open a new AI session and ask: `Use the nox-extension-developer skill`. Confirm that it reports loading the skill. For another agent, see `npx skills add --help` and select its identifier. Installers and local copies may use different directories; check the reported destination.
-
-### Method 2 — ask your AI ⭐
-
-Open your agentic AI, copy the text below, send it, and authorize only the operations you agree to:
-
-```text
-Install and configure the Nox Extension Developer skill:
-https://github.com/Awerkori/nox-extension-developer
-
-Consult the official documentation and identify my operating system and AI agent. Ask whether I want to work with manga, anime, novels, or all of them. Check existing tools and install only what is needed, including Java and Android SDK only when applicable. Ask permission before installations, privileged operations, or accepting licenses. Do not overwrite settings or expose credentials. Install the skill using NPX, verify discovery in a new session, and explain how to create, fix, or update an extension.
-```
-
-[Download English prompt](prompts/install-en.txt) · [Prompt em português](prompts/install-pt-BR.txt) · [Manual installation](docs/en/guide.md#installation)
 
 ## 🚀 Practical examples
 
