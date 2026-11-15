@@ -79,7 +79,7 @@ mkdir -p ~/.config/opencode/skills
 python3 scripts/install.py opencode
 ```
 
-No Windows, abra PowerShell no diretório da skill. Confirme que Python 3 está disponível; se o comando `python` não funcionar, use o comando Python 3 disponível na instalação local.
+No Windows nativo, os scripts de referências não funcionam porque dependem de `fcntl` e operações POSIX. Use WSL com Linux para instalar o agente e executar os scripts. O exemplo de link abaixo é apenas referência e não comprova funcionamento nativo:
 
 ```powershell
 New-Item -ItemType Directory -Force -Path "$HOME\.config\opencode\skills" | Out-Null

@@ -1,6 +1,11 @@
 # Changelog
 
-## 1.0.0 — local pre-publication candidate
+## 1.0.1
+
+- Expand bilingual dependency and Android SDK guidance, add practical examples, and clarify Windows/WSL limitations.
+- Document verified OpenCode discovery after installation from the public repository.
+
+## 1.0.0
 
 - Added an Agent Skills workflow for Keiyoushi, Yuzono, and LNReader, with on-demand official references pinned to upstream commits.
 - Added integrity-checked snapshots, offline fallback, corruption quarantine, and serialized updates.

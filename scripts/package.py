@@ -12,6 +12,7 @@ FILES = (
     'SKILL.md', 'README.md', 'README.en.md', 'CHANGELOG.md', 'LICENSE', 'ATRIBUICOES.md', 'COMPATIBILIDADE.md', 'SEGURANCA.md',
     'CONTRIBUTING.md', 'CONTRIBUTING.en.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md',
     'assets/banner.svg', 'assets/logo.svg', 'docs/pt-BR/guia.md', 'docs/en/guide.md',
+    'docs/pt-BR/dependencias.md', 'docs/en/dependencies.md', 'docs/pt-BR/android-sdk.md', 'docs/en/android-sdk.md',
     'prompts/install-pt-BR.txt', 'prompts/install-en.txt',
     'scripts/install.py', 'scripts/references.py', 'scripts/api_compare.py', 'scripts/package.py',
     'references/api-contracts.md', 'tests/test_api_compare.py', 'tests/test_install.py',
