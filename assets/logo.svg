@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Nox Extension Developer</title>
+  <desc id="desc">Símbolo geométrico de páginas sobrepostas com uma estrela, em azul e violeta sobre fundo escuro.</desc>
+  <defs>
+    <linearGradient id="accent" x1="42" y1="38" x2="210" y2="218" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#75e2f5"/>
+      <stop offset="1" stop-color="#a58bff"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="248" height="248" rx="56" fill="#10152a" stroke="#354364" stroke-width="8"/>
+  <path d="M57 71 119 51v132l-62 20z" fill="#1d304a" stroke="url(#accent)" stroke-width="7" stroke-linejoin="round"/>
+  <path d="m119 51 80 25v132l-80-25z" fill="#293052" stroke="url(#accent)" stroke-width="7" stroke-linejoin="round"/>
+  <path d="m74 92 28-9M74 112l28-9M137 91l38 12M137 111l38 12" fill="none" stroke="#b9c8e7" stroke-width="6" stroke-linecap="round"/>
+  <path d="m166 137 5 13 13 5-13 5-5 13-5-13-13-5 13-5z" fill="#8de9ed"/>
+</svg>
