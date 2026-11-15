@@ -2,143 +2,240 @@
 
 <p align="center"><img src="assets/banner.svg" alt="Project Nox — Nox Extension Developer" width="100%"></p>
 
-# Nox Extension Developer
+# Project Nox · Extension Developer
 
-**Skill para criar, corrigir e revisar extensões de mangá, anime e novels com assistência de agentes.** Consulte as referências oficiais de cada ecossistema antes de alterar código.
+Uma **skill gratuita e de código aberto** que ajuda sua IA a criar, corrigir e atualizar extensões. Você descreve o que precisa; a IA consulta as referências oficiais, analisa o site e orienta o desenvolvimento, os testes e a compilação.
 
-[English](README.en.md) · [Guia](docs/pt-BR/guia.md) · [Segurança](SEGURANCA.md) · [Compatibilidade](COMPATIBILIDADE.md)
-
-[![Licença: AGPL-3.0-only](https://img.shields.io/badge/licen%C3%A7a-AGPL--3.0--only-purple)](LICENSE) [![Versão](https://img.shields.io/github/v/release/Awerkori/nox-extension-developer)](https://github.com/Awerkori/nox-extension-developer/releases) [![CI](https://github.com/Awerkori/nox-extension-developer/actions/workflows/ci.yml/badge.svg)](https://github.com/Awerkori/nox-extension-developer/actions/workflows/ci.yml)
-
-**Navegação:** [Ecossistemas](#ecossistemas) · [Instalação](#instalação) · [Dependências](docs/pt-BR/dependencias.md) · [Android SDK](docs/pt-BR/android-sdk.md) · [Exemplos](#exemplos) · [Comunidade](#comunidade-e-licença)
-
-## Ecossistemas
-
-| Conteúdo | App de referência | Projeto de fontes | Entrega típica |
+| Conteúdo | Padrão | Aplicativo | Resultado |
 |---|---|---|---|
-| Mangá | [Mihon](https://mihon.app/) e compatíveis | [Keiyoushi](https://github.com/keiyoushi/extensions-source) | APK de extensão |
-| Anime | [Aniyomi](https://aniyomi.org/) e compatíveis | [Yuzono](https://github.com/yuzono/anime-extensions) | APK de extensão |
-| Novels | [LNReader](https://github.com/LNReader/lnreader) | [LNReader plugins](https://github.com/LNReader/lnreader-plugins) | Bundle de plugin JavaScript |
+| 📚 Mangá | Keiyoushi | Mihon e forks | APK |
+| 🎬 Anime | Yuzono | Aniyomi e forks | APK |
+| 📖 Novel | LNReader | LNReader | Plugin / bundle |
 
-Formatos e compatibilidade dependem das versões do app e do repositório. A skill não distribui APKs nem bundles de terceiros.
+O Project Nox não é afiliado aos projetos de referência. Use apenas sites e conteúdos que você tenha autorização para acessar. A skill auxilia o desenvolvimento, mas não garante funcionamento em qualquer site.
 
-## Compatibilidade
+## 📦 Dependências necessárias
 
-| Ambiente | Estado |
-|---|---|
-| OpenCode + Arch Linux | Testado |
-| OpenCode + outras distribuições Linux | Não homologado |
-| OpenCode + Windows/macOS | Não testado; Windows nativo requer WSL para os scripts atuais |
-| Codex, Claude Code, Google Antigravity, Hermes Agent e outros | Não testados |
+| Ferramenta | Para que serve | Quando instalar |
+|---|---|---|
+| Git | Consulta repositórios oficiais | Para usar as referências |
+| Python 3 | Executa os scripts da skill | Para usar os scripts |
+| Node.js, npm e NPX | Instalam a skill pelo terminal | Para o método NPX; Node também é necessário para LNReader |
+| Java JDK | Compila código Kotlin | Para mangá e anime, na versão exigida pelo projeto |
+| Android SDK, Command-line Tools, plataforma e Build Tools | Preparam e compilam APKs | Para mangá e anime, conforme o projeto |
+| Dependências do LNReader e TypeScript | Desenvolvem plugins de novels | Para novels; use as versões do próprio projeto |
+| ADB e emulador | Testam em dispositivo Android | Opcionais quando não houver teste em dispositivo |
 
-Agent Skills é um formato compartilhado, não uma garantia de compatibilidade. Confira [detalhes](COMPATIBILIDADE.md) e [dependências](docs/pt-BR/dependencias.md).
+> **NPX instala a skill, não Java, Android SDK ou as demais ferramentas de desenvolvimento.**
+>
+> **Para desenvolver somente novels para LNReader, você não precisa instalar o Android SDK.**
 
-## O que faz
+O Gradle Wrapper e outras ferramentas podem acompanhar o projeto. Não é necessário instalá-las globalmente. Veja o [guia de dependências](docs/pt-BR/dependencias.md).
 
-- Cria, corrige, mantém, migra ou revisa fontes, inclusive a partir de pedidos em linguagem natural.
-- Consulta documentação oficial por ecossistema e orienta análise de catálogo, busca, detalhes e conteúdo.
-- Compara contratos de API fornecidos e pede aprovação antes de migrações arriscadas ou de escopo ampliado.
-- Orienta testes e builds específicos, preservando a API local quando apropriado.
+## 💻 Instalação das dependências
 
-## Instalação
+Abra a seção do seu sistema. Instale apenas ferramentas ausentes e peça ajuda à IA se algum comando falhar. Operações com `sudo` pedem senha e alteram o computador.
 
-### CLI de skills
+<details><summary>🐧 Arch Linux</summary>
 
-```sh
+Abra o Terminal e execute:
+
+```bash
+sudo pacman -S --needed git python nodejs npm
+```
+
+Para mangá ou anime, instale o JDK exigido pelo projeto, por exemplo `sudo pacman -S --needed jdk21-openjdk` quando ele exigir Java 21. Depois siga o [guia Android SDK](docs/pt-BR/android-sdk.md), que contém o bloco completo de instalação e revisão de licenças.
+
+</details>
+
+<details><summary>🐧 Ubuntu ou Debian</summary>
+
+Abra o Terminal e execute:
+
+```bash
+sudo apt update
+sudo apt install git python3 nodejs npm
+```
+
+Para mangá ou anime, instale a versão de JDK exigida pelo projeto pelos repositórios da sua distribuição e siga o [guia Android SDK](docs/pt-BR/android-sdk.md). Procedimento não testado nesta distribuição.
+
+</details>
+
+<details><summary>🐧 Fedora</summary>
+
+Abra o Terminal e execute:
+
+```bash
+sudo dnf install git python3 nodejs npm
+```
+
+Para mangá ou anime, instale o JDK exigido pelo projeto e siga o [guia Android SDK](docs/pt-BR/android-sdk.md). Procedimento não testado nesta distribuição.
+
+</details>
+
+<details><summary>🪟 Windows</summary>
+
+Os scripts de referências da skill dependem de recursos Linux. Abra o PowerShell e instale o [WSL](https://learn.microsoft.com/windows/wsl/install) com `wsl --install`; reinicie se solicitado. Abra o Ubuntu pelo menu Iniciar e siga as instruções de Ubuntu acima **dentro do WSL**. Instale sua IA no mesmo ambiente e siga o [guia Android SDK](docs/pt-BR/android-sdk.md) quando necessário. Windows/WSL não foi homologado.
+
+</details>
+
+<details><summary>🍎 macOS</summary>
+
+Abra o Terminal. Instale [Git](https://git-scm.com/downloads), [Python 3](https://www.python.org/downloads/) e [Node.js](https://nodejs.org/en/download) pelos instaladores oficiais. Para mangá ou anime, instale um [JDK](https://openjdk.org/install/) compatível e siga o [guia Android SDK](docs/pt-BR/android-sdk.md). Procedimento não testado no macOS.
+
+</details>
+
+Verifique as ferramentas instaladas no terminal:
+
+```bash
+git --version
+python3 --version
+node --version
+npm --version
+```
+
+Para mangá ou anime, verifique também `java -version`, `javac -version` e `sdkmanager --list`. As versões Android dependem do projeto; não aceite licenças sem revisá-las. [Instruções detalhadas e solução de problemas](docs/pt-BR/guia.md).
+
+## 📥 Como instalar a skill
+
+### Método 1 — terminal
+
+Abra um terminal e execute:
+
+```bash
 npx skills add Awerkori/nox-extension-developer
 ```
 
-Para instalar globalmente no OpenCode: `npx skills add Awerkori/nox-extension-developer --global --agent opencode`. NPX instala a skill, não o Android SDK nem as dependências de desenvolvimento.
+Escolha sua IA quando o instalador perguntar. Para instalar globalmente no OpenCode:
 
-A instalação do repositório público e o carregamento da cópia instalada foram verificados no OpenCode + Arch Linux com `skills` 1.8.1. A listagem pode exibir `Agents: not linked` para uma instalação universal em `.agents/skills`, mesmo quando o OpenCode encontra a skill. Confira em uma nova sessão; isso não garante descoberta em todos os agentes.
-
-### Instalação local no OpenCode
-
-Obtenha uma cópia confiável em um diretório permanente e entre na pasta que contém `SKILL.md`. O instalador cria um link para essa pasta; não a mova enquanto o link estiver em uso.
-
-```sh
-mkdir -p ~/.config/opencode/skills
-python3 scripts/install.py opencode
+```bash
+npx skills add Awerkori/nox-extension-developer --global --agent opencode
 ```
 
-O instalador não substitui destinos existentes. Para outras plataformas, confira primeiro [COMPATIBILIDADE.md](COMPATIBILIDADE.md): os caminhos estão preparados, mas não foram testados. Não instale dependências nem aceite licenças sem autorização.
+Abra uma nova sessão da IA e peça: `Use a skill nox-extension-developer`. Confira se ela informa que carregou a skill. Para instalar em outro agente, consulte as opções de `npx skills add --help` e escolha o identificador correspondente. O instalador e as cópias locais podem usar pastas diferentes; consulte o destino informado na tela.
 
-### Prompt copiável para instalação
+### Método 2 — peça à sua IA ⭐
 
-Cole este prompt no agente de sua preferência:
+Abra sua IA agêntica, copie o texto abaixo, envie e autorize apenas as operações com as quais concordar:
 
 ```text
-Ajude-me a instalar a Nox Extension Developer de https://github.com/Awerkori/nox-extension-developer. Identifique meu sistema operacional e agente, consulte as instruções oficiais e pergunte quais ecossistemas desejo usar. Verifique as ferramentas existentes e prefira npx skills add Awerkori/nox-extension-developer. Configure apenas dependências necessárias, incluindo Android SDK somente se aplicável. Peça autorização antes de mudanças relevantes, operações privilegiadas ou aceite de licenças; não sobrescreva configurações nem exponha credenciais. Verifique instalação e descoberta da skill em nova sessão e relate como começar e o que não foi testado.
+Instale e configure a skill Nox Extension Developer:
+https://github.com/Awerkori/nox-extension-developer
+
+Consulte a documentação oficial e identifique meu sistema operacional e minha IA. Pergunte se desejo trabalhar com mangá, anime, novels ou todos. Verifique as ferramentas existentes e instale somente as necessárias, incluindo Java e Android SDK apenas quando aplicável. Solicite minha autorização antes de instalações, operações administrativas ou aceite de licenças. Não sobrescreva configurações nem exponha credenciais. Instale a skill via NPX, confirme sua descoberta em uma nova sessão e explique como criar, corrigir ou atualizar uma extensão.
 ```
 
-Versões completas: [prompt em português](prompts/install-pt-BR.txt) · [English prompt](prompts/install-en.txt).
+[Baixar prompt em português](prompts/install-pt-BR.txt) · [English prompt](prompts/install-en.txt) · [Instalação manual](docs/pt-BR/guia.md#instalação)
 
-## Dependências e verificação
+## 🚀 Como utilizar na prática
 
-- Para instalação local: Python 3 e diretório de skills da plataforma existente.
-- Para atualizar referências: Python 3, Git, HTTPS e acesso aos repositórios oficiais. Offline, é necessário um snapshot íntegro obtido anteriormente.
-- Para builds Keiyoushi ou Yuzono: Java, Android SDK e componentes exigidos pelo repositório alvo. Para LNReader: Node.js e dependências exigidas pelo projeto alvo. Verifique versões antes de instalar ou compilar.
+Substitua os textos entre colchetes pelo endereço do site ou do código.
 
-Abra uma nova sessão do OpenCode e peça explicitamente `Use nox-extension-developer`. Confirme que o agente carregou `SKILL.md`; a seleção automática não é garantida. Para consultar referências e executar os testes locais, a partir da pasta da skill:
-
-```sh
-python3 scripts/references.py sync keiyoushi
-python3 scripts/references.py sync yuzono
-python3 scripts/references.py sync lnreader
-python3 -m unittest discover -s tests -v
-```
-
-## Exemplos
-
-Criação e correção, respectivamente:
-
+### 📚 Mangá — criar
 ```text
-Crie uma extensão de mangá seguindo o padrão Keiyoushi para o Mihon deste site: [URL].
-Corrija esta extensão seguindo o padrão Keiyoushi: [LINK DO CÓDIGO]. Os capítulos não aparecem e as páginas não carregam.
-
-Crie uma extensão de anime seguindo o padrão Yuzono para o Aniyomi deste site: [URL].
-Corrija esta extensão seguindo o padrão Yuzono: [LINK DO CÓDIGO]. Os episódios não carregam e os vídeos não reproduzem.
-
-Crie uma extensão de novel para o LNReader deste site: [URL].
-Corrija esta extensão para o LNReader: [LINK DO CÓDIGO]. A pesquisa não retorna resultados e os capítulos não carregam.
+Crie uma extensão de mangá seguindo o padrão Keiyoushi para o Mihon deste site: [URL DO SITE].
 ```
 
-- `Use nox-extension-developer para corrigir esta extensão Keiyoushi sem migrar sua API.`
-- `Use nox-extension-developer para revisar a resolução de vídeos desta fonte Yuzono.`
-- `Use nox-extension-developer para criar um plugin LNReader para <URL>, respeitando as regras do site.`
+### 📚 Mangá — corrigir
+```text
+Corrija esta extensão seguindo o padrão Keiyoushi: [LINK DO CÓDIGO].
 
-## Referências e cache offline
+Os capítulos não aparecem e as páginas não carregam.
+```
 
-No início de cada tarefa, `scripts/references.py` resolve o HEAD oficial com `git ls-remote` e obtém documentos obrigatórios fixados no commit. O manifesto registra URLs, commit, horário e hashes SHA-256. Se o commit não mudou, o script verifica e reutiliza o snapshot local. Um novo commit exige revisão manual de compatibilidade de API, mesmo que os documentos obrigatórios não tenham mudado. O script não atualiza em segundo plano.
+### 🎬 Anime — criar
+```text
+Crie uma extensão de anime seguindo o padrão Yuzono para o Aniyomi deste site: [URL DO SITE].
+```
 
-O cache fica em `${XDG_CACHE_HOME:-~/.cache}/opencode/nox-workspace/nox-extension-developer/`. Falhas de rede podem retornar um snapshot completo e íntegro com `offline_or_unverified`; ele pode estar desatualizado. Sem snapshot íntegro, a consulta falha. Atualizações parciais não substituem o snapshot anterior; histórico e quarentena não são limpos automaticamente. Hashes detectam corrupção acidental, mas não autenticam um cache totalmente adulterado.
+### 🎬 Anime — corrigir
+```text
+Corrija esta extensão seguindo o padrão Yuzono: [LINK DO CÓDIGO].
 
-## Segurança, permissões e direitos
+Os episódios não carregam e os vídeos não reproduzem.
+```
 
-Documentos remotos e páginas de sites são dados não confiáveis. O script de referências não executa comandos contidos neles; instruções ao agente não são sandbox nem garantia contra prompt injection. Use permissões mínimas, proteja credenciais e aplique isolamento adequado. Peça autorização antes de instalar dependências, alterar permissões, acessar dados privados ou testar sites reais. Respeite licenças, direitos autorais, termos e controles de acesso dos sites; esta skill não concede direitos de acesso ou distribuição.
+### 📖 Novel — criar
+```text
+Crie uma extensão de novel para o LNReader deste site: [URL DO SITE].
+```
 
-## Arquitetura e limites
+### 📖 Novel — corrigir
+```text
+Corrija esta extensão para o LNReader: [LINK DO CÓDIGO].
 
-- [`SKILL.md`](SKILL.md): instruções e fluxo de trabalho do agente.
-- [`scripts/references.py`](scripts/references.py): sincronização e verificação dos snapshots.
-- [`scripts/api_compare.py`](scripts/api_compare.py) e [`references/api-contracts.md`](references/api-contracts.md): comparação limitada de contratos informados.
-- [`scripts/install.py`](scripts/install.py): instalação local por link simbólico; `tests/`: testes locais.
+A pesquisa não funciona e os capítulos não carregam.
+```
 
-Somente o OpenCode local em Linux teve instalação e carregamento verificados. Codex, Claude Code, Antigravity e Windows não foram testados. A identificação de API depende da análise do agente; a comparação de declarações é heurística e não prova compatibilidade semântica. Builds e testes com dados sintéticos não comprovam funcionamento em sites ou APIs reais. Compile e teste o alvo autorizado antes de afirmar que funciona.
+Para atualizar uma extensão, envie seu código e peça à IA que preserve a compatibilidade. Peça o caminho do APK ou bundle e instruções para testá-lo. Revise o resultado e use somente fontes autorizadas.
 
-## Problemas comuns e remoção
+## 🤖 Compatibilidade com IAs agênticas
 
-- **Skill não aparece:** confira o destino indicado pelo instalador. No OpenCode, o instalador local usa `~/.config/opencode/skills/nox-extension-developer`; a CLI `skills` pode usar `.agents/skills/nox-extension-developer` no projeto ou no diretório do usuário. Confira `SKILL.md` e permissões, abra outra sessão e invoque a skill explicitamente.
-- **`offline_or_unverified`:** confira rede e acesso aos repositórios; o snapshot disponível pode estar desatualizado.
-- **Sem snapshot íntegro:** restabeleça o acesso e sincronize novamente. Não use regras desconhecidas para modificar código.
-- **Destino já existe:** inspecione-o; o instalador não sobrescreve arquivos nem links.
+| Agente | Status |
+|---|---|
+| [OpenCode](https://opencode.ai/) | ✅ Testado |
+| [Codex](https://developers.openai.com/codex/) | ⚪ Não testado |
+| [Claude Code](https://code.claude.com/) | ⚪ Não testado |
+| [Google Antigravity](https://antigravity.google/) | ⚪ Não testado |
+| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | ⚪ Não testado |
 
-Para uma instalação pela CLI, execute `npx skills remove nox-extension-developer` e revise as opções; acrescente `--global` se instalou globalmente. Para o instalador por link, confirme o destino e remova somente esse link. Preserve o diretório original e o cache enquanto forem necessários; não os apague automaticamente.
+A skill foi desenvolvida e testada com OpenCode no ambiente Arch Linux do desenvolvedor. Outros agentes e sistemas podem ser compatíveis, mas não foram homologados.
 
-## Comunidade e licença
+## ❓ Perguntas frequentes
 
-Leia [CONTRIBUTING.md](CONTRIBUTING.md) e [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Use [issues](https://github.com/Awerkori/nox-extension-developer/issues) para bugs e propostas e [discussions](https://github.com/Awerkori/nox-extension-developer/discussions) para dúvidas. Para vulnerabilidades, consulte [SECURITY.md](SECURITY.md) e use o reporte privado do GitHub.
+**Preciso saber programar?** Não para começar, mas revisar e manter extensões pode exigir ajuda técnica.
 
-Licença: **AGPL-3.0-only**, conforme [LICENSE](LICENSE). Referências de terceiros mantêm suas próprias licenças; veja [ATRIBUICOES.md](ATRIBUICOES.md). Project Nox não é afiliado aos projetos citados.
+**A skill é gratuita? Preciso pagar pela IA?** A skill é gratuita. Custos e cotas dependem do agente e do modelo escolhidos.
 
-Referências oficiais: [Agent Skills](https://agentskills.io/) · [OpenCode skills](https://opencode.ai/docs/skills/) · [Keiyoushi](https://github.com/keiyoushi/extensions-source) · [Yuzono](https://github.com/yuzono/anime-extensions) · [LNReader plugins](https://github.com/LNReader/lnreader-plugins).
+**Preciso instalar uma IA local?** Não necessariamente; depende do serviço que você usar.
+
+**Preciso do Android SDK?** Para compilar APKs de mangá ou anime, sim. Para apenas LNReader, não.
+
+**Posso usar para criar ou corrigir extensões próprias e contribuir?** Sim, respeitando os direitos e regras dos sites e projetos envolvidos.
+
+**Minha IA não reconheceu a skill.** Abra uma nova sessão, peça seu nome explicitamente e confira o destino informado pelo instalador. Veja [solução de problemas](docs/pt-BR/guia.md#solução-de-problemas).
+
+**Como atualizo ou removo?** Consulte a CLI com `npx skills update --help` ou `npx skills remove --help`; para o instalador manual, preserve a pasta de origem e confira o link antes de removê-lo.
+
+## 🤝 Suporte e contribuições
+
+- [Issues](https://github.com/Awerkori/nox-extension-developer/issues): reporte problemas reproduzíveis.
+- [Discussions](https://github.com/Awerkori/nox-extension-developer/discussions): tire dúvidas e compartilhe ideias.
+- [Pull Requests](https://github.com/Awerkori/nox-extension-developer/pulls): envie melhorias; leia [como contribuir](CONTRIBUTING.md).
+- [Releases](https://github.com/Awerkori/nox-extension-developer/releases): acompanhe atualizações.
+
+Nunca publique senhas, tokens ou dados pessoais. Para vulnerabilidades, use o canal descrito em [SECURITY.md](SECURITY.md).
+
+## 🔗 Projetos relacionados
+
+- [Plataforma Web de Mangá](https://github.com/Awerkori/project-nox-manga) — leitor e plataforma web.
+- [Importer](https://github.com/Awerkori/project-nox-importer) — importação de conteúdo.
+- [Extensões de Mangá](https://github.com/Awerkori/manga-extensoes) · [Código-fonte](https://github.com/Awerkori/manga-fonte-extensoes).
+- [Extensões de Anime](https://github.com/Awerkori/anime-extensoes) · [Código-fonte](https://github.com/Awerkori/anime-fonte-extensoes).
+- [Central de Pedidos](https://github.com/Awerkori/project-nox-requests) · [Tracker](https://github.com/Awerkori/project-nox-tracker).
+
+## 🌟 Créditos e reconhecimento
+
+Criado por **Awerkori** para o **Project Nox**, com agradecimento à comunidade e aos colaboradores. [Keiyoushi](https://github.com/keiyoushi/extensions-source), [Yuzono](https://github.com/yuzono/anime-extensions), [LNReader](https://github.com/LNReader/lnreader-plugins) e o padrão [Agent Skills](https://agentskills.io/) são referências técnicas independentes. Consulte [atribuições](ATRIBUICOES.md).
+
+## ⚖️ Licença e Copyright
+
+Copyright © 2026 Awerkori. Software livre sob **GNU Affero General Public License versão 3.0 (`AGPL-3.0-only`)**. Leia o texto integral em [LICENSE](LICENSE).
+
+> This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License, version 3. It is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+### 📌 Interação Remota de Rede (GNU AGPLv3 Seção 13)
+
+Ao modificar o programa e permitir interação remota pela rede, ofereça aos usuários remotos acesso ao código-fonte correspondente da versão modificada, conforme a seção 13 da licença.
+
+### 🛡️ Proteção de Identidade e Marca (AGPLv3 Seção 7(e))
+
+A licença do software não concede automaticamente autorização para usar nomes ou logotipos do Project Nox e Awerkori para insinuar representação, aprovação ou endosso oficial.
+
+### 🌐 Utilização e Redistribuição
+
+Você pode usar, estudar, modificar e redistribuir a skill gratuitamente, observando os termos da AGPLv3 e as licenças de terceiros aplicáveis.
+
+### ⚖️ Isenção de Responsabilidade
+
+A skill auxilia o desenvolvimento; ela não concede direitos sobre conteúdo de terceiros nem garante o funcionamento das extensões. O programa é fornecido sem garantias, conforme a licença.

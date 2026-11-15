@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2
+
+- Reorganize the Portuguese and English READMEs around a beginner-friendly setup and usage journey.
+- Clarify ecosystem dependencies, agent compatibility, community resources, and licensing.
+
 ## 1.0.1
 
 - Expand bilingual dependency and Android SDK guidance, add practical examples, and clarify Windows/WSL limitations.
