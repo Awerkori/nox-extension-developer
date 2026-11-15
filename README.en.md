@@ -96,12 +96,12 @@ Only local OpenCode on Linux has had installation and loading verified. Codex, C
 
 ## Troubleshooting and removal
 
-- **Skill missing:** check the link at `~/.config/opencode/skills/nox-extension-developer`, `SKILL.md` at its target, and permissions. Open another session and invoke the skill explicitly.
+- **Skill missing:** check the destination reported by the installer. For OpenCode, the local installer uses `~/.config/opencode/skills/nox-extension-developer`; the `skills` CLI can use `.agents/skills/nox-extension-developer` in the project or user directory. Check `SKILL.md` and permissions, open another session, and invoke the skill explicitly.
 - **`offline_or_unverified`:** check network and repository access; the available snapshot may be stale.
 - **No intact snapshot:** restore access and synchronize again. Do not modify code based on unknown rules.
 - **Destination exists:** inspect it; the installer does not overwrite files or links.
 
-To uninstall, confirm that the platform link points to this copy and remove only that link. Keep the original directory and cache while needed; do not delete them automatically.
+For a CLI installation, run `npx skills remove nox-extension-developer` and review its options; add `--global` if installed globally. For the symlink installer, confirm the target and remove only that link. Keep the original directory and cache while needed; do not delete them automatically.
 
 ## Community and license
 

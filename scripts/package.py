@@ -9,7 +9,10 @@ import tempfile
 import zipfile
 
 FILES = (
-    'SKILL.md', 'README.md', 'CHANGELOG.md', 'LICENSE', 'ATRIBUICOES.md', 'COMPATIBILIDADE.md', 'SEGURANCA.md',
+    'SKILL.md', 'README.md', 'README.en.md', 'CHANGELOG.md', 'LICENSE', 'ATRIBUICOES.md', 'COMPATIBILIDADE.md', 'SEGURANCA.md',
+    'CONTRIBUTING.md', 'CONTRIBUTING.en.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md',
+    'assets/banner.svg', 'assets/logo.svg', 'docs/pt-BR/guia.md', 'docs/en/guide.md',
+    'prompts/install-pt-BR.txt', 'prompts/install-en.txt',
     'scripts/install.py', 'scripts/references.py', 'scripts/api_compare.py', 'scripts/package.py',
     'references/api-contracts.md', 'tests/test_api_compare.py', 'tests/test_install.py',
     'tests/test_package.py', 'tests/test_references.py',

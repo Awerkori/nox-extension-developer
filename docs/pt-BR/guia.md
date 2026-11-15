@@ -21,6 +21,19 @@ Confira primeiro as ferramentas existentes. Em Linux e macOS, execute `python3 -
 - **Windows:** obtenha Python em [python.org](https://www.python.org/downloads/), Git em [git-scm.com](https://git-scm.com/downloads), e Node.js, quando necessário, em [nodejs.org](https://nodejs.org/en/download). Para o JDK, escolha uma distribuição confiável compatível com o projeto, como [OpenJDK](https://openjdk.org/install/). Confira o PATH em uma nova sessão do PowerShell.
 - **macOS:** obtenha ferramentas de fontes oficiais: [Python](https://www.python.org/downloads/), [Git](https://git-scm.com/downloads), [OpenJDK](https://openjdk.org/install/) e [Node.js](https://nodejs.org/en/download), conforme necessário. Confira o PATH em um novo terminal.
 
+Exemplos para instalar Git, Python e, somente se precisar de NPX ou LNReader, Node.js e npm. Revise o comando e peça autorização administrativa antes de executá-lo; instale apenas os pacotes ausentes:
+
+```sh
+# Arch Linux
+sudo pacman -S --needed git python nodejs npm
+# Debian / Ubuntu
+sudo apt update && sudo apt install git python3 nodejs npm
+# Fedora
+sudo dnf install git python3 nodejs npm
+```
+
+Para Windows e macOS, siga os instaladores oficiais ligados acima. Confira as versões após instalar. Estes exemplos não foram testados em todas as distribuições; o JDK deve corresponder ao projeto de destino.
+
 Instalações e mudanças que exigem privilégios administrativos dependem de consentimento explícito. Linux foi testado localmente; as orientações para Windows e macOS não foram testadas.
 
 ## Android SDK, quando necessário
@@ -39,7 +52,7 @@ sdkmanager "platform-tools" "platforms;android-<API>" "build-tools;<VERSÃO>"
 
 ## Alternativa com NPX
 
-Esta alternativa requer Node.js e npm e **não foi testada neste pacote**. O [Skills CLI oficial](https://github.com/vercel-labs/skills/blob/main/docs/commands.md) aceita caminho local ou URL remota. Revise o pacote, o código da CLI e a origem antes de executar: `npx` pode baixar e executar código do registro npm. Veja também [npm exec](https://docs.npmjs.com/cli/commands/npm-exec/). Não use opções que aceitem alterações automaticamente sem revisão.
+Esta alternativa requer Node.js e npm. A descoberta e a instalação por cópia local foram testadas com Skills CLI 1.8.1 no Linux; outros sistemas e o fluxo remoto não foram verificados nesse teste. O [Skills CLI oficial](https://github.com/vercel-labs/skills/blob/main/docs/commands.md) aceita caminho local ou URL remota. Revise o pacote, o código da CLI e a origem antes de executar: `npx` pode baixar e executar código do registro npm. Veja também [npm exec](https://docs.npmjs.com/cli/commands/npm-exec/). Não use opções que aceitem alterações automaticamente sem revisão.
 
 No diretório permanente da skill, a fonte local é `.`:
 

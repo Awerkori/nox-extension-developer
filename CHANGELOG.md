@@ -12,5 +12,6 @@
 - Clarified natural-language examples, synthetic-test limits, and the owner’s licensing decision.
 - Treat unknown or nonnumeric version identifiers as indeterminate in scoped API comparisons.
 - Require a known-positive search check and clarify site inspection, dependency reuse, and resuming interrupted work.
+- Include both language guides, prompts, and visual assets in the distribution ZIP.
 
 Released under AGPL-3.0-only. Third-party projects retain their own licenses; see `ATRIBUICOES.md`.

@@ -11,6 +11,13 @@ spec.loader.exec_module(package)
 
 
 class PackageTests(unittest.TestCase):
+    def test_distribution_contains_bilingual_documentation(self):
+        required = {'README.en.md', 'docs/pt-BR/guia.md', 'docs/en/guide.md',
+                    'prompts/install-pt-BR.txt', 'prompts/install-en.txt',
+                    'assets/banner.svg', 'assets/logo.svg', 'SECURITY.md',
+                    'CONTRIBUTING.md', 'CONTRIBUTING.en.md', 'CODE_OF_CONDUCT.md'}
+        self.assertTrue(required.issubset(package.FILES))
+
     def test_deterministic_allowlist_and_no_overwrite(self):
         with tempfile.TemporaryDirectory(prefix='nox-package-') as tmp:
             root = Path(tmp) / 'source'
