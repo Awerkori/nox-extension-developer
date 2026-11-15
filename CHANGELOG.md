@@ -13,5 +13,6 @@
 - Treat unknown or nonnumeric version identifiers as indeterminate in scoped API comparisons.
 - Require a known-positive search check and clarify site inspection, dependency reuse, and resuming interrupted work.
 - Include both language guides, prompts, and visual assets in the distribution ZIP.
+- Install under the canonical skill name even when the source directory was renamed.
 
 Released under AGPL-3.0-only. Third-party projects retain their own licenses; see `ATRIBUICOES.md`.

@@ -37,6 +37,15 @@ class Installer(unittest.TestCase):
         self.run_install()
         self.assertTrue(link.is_symlink())
 
+    def test_renamed_source_uses_canonical_skill_name(self):
+        renamed = self.root.with_name('downloaded-release')
+        self.root.rename(renamed)
+        self.root = renamed
+        self.run_install()
+        link = self.destination / 'nox-extension-developer'
+        self.assertTrue(link.is_symlink())
+        self.assertEqual(link.resolve(), renamed)
+
     def test_refuses_existing_directory_and_dangling_link(self):
         dest = self.destination / self.root.name
         dest.mkdir()

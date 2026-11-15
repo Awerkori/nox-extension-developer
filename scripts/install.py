@@ -23,7 +23,7 @@ def main():
     parent = DESTINATIONS[args.platform]
     if not parent.is_dir():
         parser.error(f'skill directory does not exist: {parent}; verify platform installation first')
-    dest = parent / ROOT.name
+    dest = parent / 'nox-extension-developer'
     if os.path.lexists(dest):
         if dest.is_symlink() and dest.resolve() == ROOT:
             print(f'already installed: {dest}')
