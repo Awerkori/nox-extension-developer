@@ -1,3 +1,5 @@
+[Português (Brasil)](README.md) | [English](README.en.md)
+
 <p align="center"><img src="assets/banner.svg" alt="Project Nox — Nox Extension Developer" width="100%"></p>
 
 # Nox Extension Developer
