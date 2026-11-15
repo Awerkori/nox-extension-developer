@@ -20,7 +20,7 @@ Project Nox is not affiliated with the reference projects. Use only sites and co
 |---|---|---|
 | Git | Consult official repositories | For reference lookup |
 | Python 3 | Runs skill scripts | To use the scripts |
-| Node.js, npm and NPX | Install the skill from a terminal | For NPX; Node is also needed for LNReader |
+| Node.js, npm and NPX | Install the skill from a terminal | NPX requires Node.js **22.20.0 or newer**; LNReader requires Node.js **22 or newer**. Node.js 24 LTS is recommended |
 | Java JDK | Compiles Kotlin | For manga and anime, in the project-required version |
 | Android SDK, Command-line Tools, platform and Build Tools | Prepare and build APKs | For manga and anime, as required by the project |
 | LNReader dependencies and TypeScript | Develop novel plugins | For novels; use the project's own versions |
@@ -36,15 +36,37 @@ The Gradle Wrapper and other tools may come with the project; global installatio
 
 Open the section for your system. Install only missing tools and ask your AI for help if a command fails. Commands with `sudo` ask for your password and change your computer.
 
+**Step 1:** install Git, Python, and Node. **Step 2:** prepare Android for manga/anime or local dependencies for novels. **Step 3:** install the skill using NPX or the prompt below. Before changing an existing version, check `node --version`; `skills` 1.8.1 requires Node.js 22.20.0 or newer. We recommend Node.js 24 LTS.
+
+Distribution packages may provide an older Node version. If `node --version` is below 22.20.0, install Node 24 using the [official installer](https://nodejs.org/en/download) and open a new terminal. Review an existing installation before replacing it.
+
+On Linux, WSL, or macOS, another option is installing user-local Node 24 with [nvm](https://github.com/nvm-sh/nvm):
+
+```bash
+# If ~/.nvm already exists, use the existing installation; do not replace it.
+if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
+export NVM_DIR="$HOME/.nvm"
+. "$NVM_DIR/nvm.sh"
+nvm install 24
+nvm use 24
+node --version
+npm --version
+npx --version
+```
+
+To load nvm in new Bash terminals, add `export NVM_DIR="$HOME/.nvm"` and `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` to `~/.bashrc` only after checking for equivalent existing entries. For Zsh use `~/.zshrc`.
+
+For novels, run `npm install` in the LNReader project directory, usually with help from your AI. TypeScript and libraries are installed according to the project's `package.json`. For manga/anime, use the repository's `./gradlew`: Gradle, Kotlin, and dependencies are resolved by the build system; global Gradle or Kotlin installs are unnecessary. ADB and an emulator are optional for device tests.
+
 <details><summary>🐧 Arch Linux</summary>
 
 Open Terminal and run:
 
 ```bash
-sudo pacman -S --needed git python nodejs npm
+sudo pacman -S --needed git python nodejs npm curl unzip
 ```
 
-For manga or anime, install the JDK your project requires, for example `sudo pacman -S --needed jdk21-openjdk` when it requires Java 21. Then follow the [Android SDK guide](docs/en/android-sdk.md), including the installation block and license review.
+For manga or anime, install the JDK your project requires, for example `sudo pacman -S --needed jdk21-openjdk` when it requires Java 21. Use the Android steps below to install Command-line Tools, platform, and Build Tools as required. For novels, follow `npm install` above.
 
 </details>
 
@@ -54,10 +76,10 @@ Open Terminal and run:
 
 ```bash
 sudo apt update
-sudo apt install git python3 nodejs npm
+sudo apt install git python3 nodejs npm curl unzip ca-certificates
 ```
 
-For manga or anime, install your project's required JDK from your distribution repositories and follow the [Android SDK guide](docs/en/android-sdk.md). This procedure was not tested on this distribution.
+For manga or anime, if your project requires Java 21 and your distribution supplies it, run `sudo apt install openjdk-21-jdk`. For another version, check your distribution's packages. Use the Android steps below. For novels, follow `npm install` above. This procedure was not tested on this distribution.
 
 </details>
 
@@ -66,22 +88,22 @@ For manga or anime, install your project's required JDK from your distribution r
 Open Terminal and run:
 
 ```bash
-sudo dnf install git python3 nodejs npm
+sudo dnf install git python3 nodejs npm curl unzip coreutils
 ```
 
-For manga or anime, install your project's required JDK and follow the [Android SDK guide](docs/en/android-sdk.md). This procedure was not tested on this distribution.
+For manga or anime, when your project requires Java 21, run `sudo dnf install java-21-openjdk-devel`. For another version, check available packages. Use the Android steps below. For novels, follow `npm install` above. This procedure was not tested on this distribution.
 
 </details>
 
 <details><summary>🪟 Windows</summary>
 
-The skill's reference scripts require Linux features. Open PowerShell and install [WSL](https://learn.microsoft.com/windows/wsl/install) with `wsl --install`; restart if prompted. Open Ubuntu from the Start menu and follow the Ubuntu instructions above **inside WSL**. Install your AI in the same environment and follow the [Android SDK guide](docs/en/android-sdk.md) when needed. Windows/WSL has not been validated.
+The reference scripts do not work on native Windows. In PowerShell, run `wsl --install`, restart if prompted, and open Ubuntu from the Start menu. Inside WSL, run `sudo apt update && sudo apt install git python3 nodejs npm curl unzip ca-certificates`; check Node and install Node 24 LTS if necessary. For manga/anime requiring Java 21, run `sudo apt install openjdk-21-jdk` and use the Android steps below inside WSL. For novels, run `npm install` in the project. Install your AI in the same environment. Windows/WSL has not been validated.
 
 </details>
 
 <details><summary>🍎 macOS</summary>
 
-Open Terminal. Install [Git](https://git-scm.com/downloads), [Python 3](https://www.python.org/downloads/), and [Node.js](https://nodejs.org/en/download) using official installers. For manga or anime, install a compatible [JDK](https://openjdk.org/install/) and follow the [Android SDK guide](docs/en/android-sdk.md). This procedure was not tested on macOS.
+Open Terminal. Install [Git](https://git-scm.com/downloads), [Python 3](https://www.python.org/downloads/), and [Node.js 24 LTS](https://nodejs.org/en/download) using official installers. For manga or anime, if you use Homebrew and your project requires Java 21, run `brew install --cask temurin@21`; open a new terminal and check `java -version`. Use the Android steps below with the macOS tools. For novels, run `npm install` in the project. This procedure was not tested on macOS.
 
 </details>
 
@@ -95,6 +117,41 @@ npm --version
 ```
 
 For manga or anime, also check `java -version`, `javac -version`, and `sdkmanager --list`. Android versions depend on the project; review licenses before accepting them. [Detailed instructions and troubleshooting](docs/en/guide.md).
+
+### Step 2 — Android SDK for manga and anime
+
+If `sdkmanager` already exists, reuse it and skip the download. Otherwise, download the official **Command-line Tools** for your system from the [Android page](https://developer.android.com/studio#command-line-tools-only), verify Google's published SHA-256, and extract the `cmdline-tools` directory as `latest` inside `~/Android/Sdk/cmdline-tools/` (inside Linux for WSL). Do not replace an existing `latest` directory. On Linux/WSL, the block below downloads version 15859902, whose checksum was checked against the official page; if the destination exists, stop and reuse your installation:
+
+```bash
+(
+set -eu
+SDK="$HOME/Android/Sdk"
+test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
+test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
+mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
+curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
+echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
+unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
+mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
+)
+```
+
+On macOS, download the ZIP for your processor from the official page; in Terminal run `shasum -a 256 ~/Downloads/commandlinetools-*.zip` and compare it with the page. Then run `mkdir -p ~/Android/Sdk/cmdline-tools`, extract the ZIP with `unzip` into that directory, and rename the extracted `cmdline-tools` folder to `latest` only if `latest` does not exist. In Linux/WSL or macOS Terminal:
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+sdkmanager --sdk_root="$ANDROID_HOME" --list
+sdkmanager --sdk_root="$ANDROID_HOME" --licenses
+```
+
+Review and accept the licenses yourself. Check versions in the project; for example, for a project requiring API 37.0 and Build Tools 37.0.0:
+
+```bash
+sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
+```
+
+To use ADB, optionally install `sdkmanager --sdk_root="$ANDROID_HOME" 'platform-tools'` and run `adb version`. Add the two `export` lines above to `~/.bashrc` (Bash) or `~/.zshrc` (Zsh) **only after checking for conflicts with existing settings**, then open another terminal. Do not change configuration files automatically. The emulator is optional.
 
 ## 📥 Install the skill
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3
+
+- Clarify Node.js version requirements and dependency setup for each ecosystem in both READMEs.
+- Add concrete JDK, Android SDK, and project-local build guidance while preserving existing installations.
+
 ## 1.0.2
 
 - Reorganize the Portuguese and English READMEs around a beginner-friendly setup and usage journey.
