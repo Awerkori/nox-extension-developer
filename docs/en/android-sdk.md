@@ -46,4 +46,11 @@ sdkmanager --sdk_root="$SDK" --list_installed
 adb version
 ```
 
-The `export` variables apply only to the current terminal. Configure them permanently according to official documentation after reviewing your settings. If the project requires another platform, install the corresponding version; preserve the previous SDK.
+The `export` variables apply only to the current terminal. To make them available in new Bash terminals, open `~/.bashrc`, check for existing Android definitions, and add these lines only if they do not conflict; save and open a new terminal:
+
+```bash
+export ANDROID_HOME="$HOME/.local/share/android-sdk-nox"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+```
+
+For Zsh, use `~/.zshrc`. Do not overwrite existing settings. If the project requires another platform, install the corresponding version; preserve the previous SDK.
