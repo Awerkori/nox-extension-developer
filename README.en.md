@@ -508,7 +508,7 @@ Your AI will check dependencies, assist with installation, and configure the ski
 
 ```text
 Install and configure the Nox Extension Developer skill:
-https://github.com/Awerkori/nox-extension-developer
+https://github.com/ProjectNox-org/nox-extension-developer
 
 Consult the official documentation and identify my operating system and AI agent. Ask whether I want to work with manga, anime, novels, or all of them. Check existing tools and install only what is needed, including Java and Android SDK only when applicable. Ask permission before installations, privileged operations, or accepting licenses. Do not overwrite settings or expose credentials. Install the skill using NPX, verify discovery in a new session, and explain how to create, fix, or update an extension.
 ```
@@ -520,13 +520,13 @@ Consult the official documentation and identify my operating system and AI agent
 Open a terminal and run:
 
 ```bash
-npx skills add Awerkori/nox-extension-developer
+npx skills add ProjectNox-org/nox-extension-developer
 ```
 
 Choose your AI when prompted. To install globally for OpenCode:
 
 ```bash
-npx skills add Awerkori/nox-extension-developer --global --agent opencode
+npx skills add ProjectNox-org/nox-extension-developer --global --agent opencode
 ```
 
 Open a new AI session and ask: `Use the nox-extension-developer skill`. Confirm that it reports loading the skill. For another agent, see `npx skills add --help` and select its identifier. Installers and local copies may use different directories; check the reported destination.
@@ -621,10 +621,10 @@ The skill was developed and tested with OpenCode on the developer's Arch Linux w
 
 ## 🤝 Support and contributions
 
-- [Issues](https://github.com/Awerkori/nox-extension-developer/issues): report reproducible problems.
-- [Discussions](https://github.com/Awerkori/nox-extension-developer/discussions): ask questions and share ideas.
-- [Pull Requests](https://github.com/Awerkori/nox-extension-developer/pulls): submit improvements; read [how to contribute](CONTRIBUTING.en.md).
-- [Releases](https://github.com/Awerkori/nox-extension-developer/releases): follow updates.
+- [Issues](https://github.com/ProjectNox-org/nox-extension-developer/issues): report reproducible problems.
+- [Discussions](https://github.com/ProjectNox-org/nox-extension-developer/discussions): ask questions and share ideas.
+- [Pull Requests](https://github.com/ProjectNox-org/nox-extension-developer/pulls): submit improvements; read [how to contribute](CONTRIBUTING.en.md).
+- [Releases](https://github.com/ProjectNox-org/nox-extension-developer/releases): follow updates.
 
 Never publish passwords, tokens, or personal data. For vulnerabilities, use the channel described in [SECURITY.md](SECURITY.md).
 
