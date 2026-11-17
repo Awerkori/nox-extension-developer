@@ -598,7 +598,7 @@ Para atualizar uma extensão, envie seu código e peça à IA que preserve a com
 | [OpenCode](https://opencode.ai/) | ✅ Testado |
 | [Codex](https://developers.openai.com/codex/) | ⚪ Não testado |
 | [Claude Code](https://code.claude.com/) | ⚪ Não testado |
-| [Google Antigravity](https://antigravity.google/) | ⚪ Não testado |
+| [Google Antigravity](https://antigravity.google/) | ✅ Testado |
 | [Hermes Agent](https://github.com/NousResearch/hermes-agent) | ⚪ Não testado |
 
 A skill foi desenvolvida e testada com OpenCode no ambiente Arch Linux do desenvolvedor. Outros agentes e sistemas podem ser compatíveis, mas não foram homologados.
