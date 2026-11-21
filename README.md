@@ -140,15 +140,15 @@ Tutoriais completos por sistema operacional (**Windows via WSL**, **Arch Linux**
 
 ## Compatibilidade com agentes
 
-| Agente | Estado | Observação |
-|---|---|---|
-| [OpenCode](https://opencode.ai/) | ✅ Testado | Link instalado e carregamento verificados no OpenCode local `v2.2.7` em Arch Linux |
-| [Codex](https://developers.openai.com/codex/) | 🟡 Documentado (não testado) | Destino `~/.agents/skills/` preparado em [`scripts/install.py`](scripts/install.py); execução não testada |
-| [Claude Code](https://code.claude.com/) | 🟡 Documentado (não testado) | Destino `~/.claude/skills/` preparado em [`scripts/install.py`](scripts/install.py); links e execução não testados |
-| [Google Antigravity](https://antigravity.google/) | 🟡 Documentado (não testado) | Destino `~/.gemini/antigravity/skills/` documentado; instalação e execução não homologadas |
-| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | ⚪ Não verificado | Sem destino dedicado nem validação no repositório |
+| Agente | Estado |
+|---|---|
+| [OpenCode](https://opencode.ai/) | ✅ Testado (`v2.2.7` em Arch Linux) |
+| [Codex](https://developers.openai.com/codex/) | 🟡 Documentado (execução não testada) |
+| [Claude Code](https://code.claude.com/) | 🟡 Documentado (execução não testada) |
+| [Google Antigravity](https://antigravity.google/) | 🟡 Documentado (não homologado) |
+| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | ⚪ Não verificado |
 
-Os testes oficiais ocorreram em **Arch Linux**; outras distribuições Linux, macOS e Windows (via WSL para scripts POSIX) não foram homologados. Veja [`COMPATIBILIDADE.md`](COMPATIBILIDADE.md).
+`Codex` (`~/.agents/skills/`), `Claude Code` (`~/.claude/skills/`) e `Google Antigravity` (`~/.gemini/antigravity/skills/`) possuem destinos documentados em [`scripts/install.py`](scripts/install.py), sem testes locais de link ou execução; `Hermes Agent` não possui alvo dedicado no instalador. Os testes oficiais ocorreram em **Arch Linux** (demais distros Linux, macOS e Windows via WSL não foram homologados). Veja [`COMPATIBILIDADE.md`](COMPATIBILIDADE.md).
 
 ## Documentação
 
@@ -164,7 +164,7 @@ Os testes oficiais ocorreram em **Arch Linux**; outras distribuições Linux, ma
 - **Preciso saber programar?** Não para iniciar com a IA, mas revisar alterações, testar casos difíceis e manter extensões pode exigir apoio técnico.
 - **A skill é gratuita?** Sim. Custos, limites e cotas dependem apenas do agente e do modelo de IA escolhidos.
 - **Preciso instalar o Android SDK?** Sim apenas para compilar APKs de mangá (Keiyoushi) ou anime (Yuzono). Para plugins LNReader de novels, **não**.
-- **Quais agentes são compatíveis?** O funcionamento foi verificado no OpenCode (`v2.2.7`); Codex, Claude Code e Google Antigravity possuem caminhos documentados sem homologação completa, e Hermes Agent não foi verificado.
+- **Quais agentes são compatíveis?** A execução foi verificada no OpenCode (`v2.2.7` em Arch Linux); Codex, Claude Code e Google Antigravity possuem caminhos documentados sem homologação oficial, e Hermes Agent não foi verificado.
 - **O que fazer se a skill não for reconhecida?** Abra uma nova sessão do agente, solicite `Use nox-extension-developer` pelo nome exato e confira o caminho/link de instalação no [guia de solução de problemas](docs/pt-BR/guia.md#solução-de-problemas).
 - **Onde estão as instruções de atualização ou remoção?** Veja `npx skills update --help`, `npx skills remove --help` e as instruções manuais na seção de [instalação e remoção do guia](docs/pt-BR/guia.md#instalação).
 
