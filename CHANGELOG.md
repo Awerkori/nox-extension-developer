@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.0
+
+Major local engineering upgrade (`1,200` traced items: `1,000` original catalog requirements + `200` autonomous enhancements) pending owner review via Pull Request before tagging/release:
+
+- **Modular local CLI (`scripts/nox.py`) & core evidence engine (`scripts/nox_core.py`):**
+  - Added strict evidence statuses (`PASS`, `FAIL`, `INCONCLUSIVE`, `BLOCKED`, `NOT_RUN`), SHA-256 execution receipts, unsupported-claim gate, `nox.py report`, and `nox.py verify-report`.
+- **Environment Doctor, Scaffolding & Structural API Compare (`scripts/nox_env.py`, `scripts/nox_scaffold.py`, `scripts/api_compare.py`):**
+  - Added `doctor`, `inspect` (detecting Keiyoushi `KeiSource`, Yuzono `AniSource`, LNReader, KSP vs legacy, deterministic 64-bit MD5 `sourceId`), `search-existing`, dependency/reproducibility/compliance checks, `scaffold` + ephemeral HTTP functional scenarios (`scenarios`), and structural multiline API comparison with quality/Hermes checks.
+- **Site DNA, Media & Image Lab (`scripts/nox_lab.py`):**
+  - Added `site-inspect`, real image magic bytes/dimension inspection (rejecting deceptive HTTP 200 HTML/SVG), `unscramble_image_slices` (permutation bijection + DRM/EME block), `lab visual-diff` with PII redaction, fractional chapter continuity (`59.5`), Yuzono `getHosterList`/`getVideoList`/HLS/DASH/subtitles, LNReader readability, `search == popular` guard, HAR replay, disk-persisted budget-enforced canary monitor, and mutation self-testing.
+- **Android Build, APK/DEX Inspection & ADB/Logcat (`scripts/nox_android.py`):**
+  - Added security-gated `build` (`gradlew assembleDebug`), `apk-inspect` (`aapt2`/`apksigner`, SHA-256, Debug vs Release, conditional 16 KB `.so` check), `api-binary-compare` (`.dex`/`.class`/`.jar`), `deeplink-check`, `adb doctor`, `parse_uiautomator_hierarchy_and_plan_actions` + `adb ui-plan` (hardware runs stay honestly `BLOCKED`/`NOT_RUN` when `adb devices` is empty), package/PID-isolated `adb filter-logcat` with secret redaction, and `bisect`.
+- **Multi-Ecosystem Nox Issue Intelligence (`scripts/nox_issues.py`):**
+  - Added live GitHub API + pinned diff inspection across Keiyoushi (`keiyoushi/extensions-source`), Yuzono (`yuzono/anime-extensions`), and LNReader (`LNReader/lnreader-plugins`), strictly distinguishing `VERIFIED_FIX` from `MERGED_UNVERIFIED`, `REVERTED_FIX`, `OPEN_OR_UNMERGED`, `CLOSED_UNMERGED`, `SUPERSEDED`, and synthetic `merge_commit_sha` traps, plus cross-version copy guard, `autofix-diagnose`, and real-analyzer `review-council`.
+- **Security & Supply-Chain Hardening (`scripts/nox_core.py`, `scripts/nox_android.py`, `scripts/nox_enhancements.py`):**
+  - Added SSRF private/IPv4-mapped IPv6/numeric-IP/meta-refresh blocking, Gradle RCE/wrapper/workflow script-injection scanner, TLS/`DexClassLoader`/WebView/Zip-Bomb/Zip-Slip checks, Trojan Source (`scan_bidi_controls`), and secret redaction.
+- **175 On-Demand Modular Enhancements (`scripts/nox_enhancements.py`) & 1,200-Item Matrix (`scripts/nox_matrix.py`):**
+  - Registered `1026`–`1200` on-demand guards (`enhance --list`, `enhance --audit-source`) plus `1001`–`1025` core capabilities, frozen catalog `references/catalog-1000.json`, validated matrix `references/matrix-1000.json` + bilingual tables (`docs/pt-BR/matriz-1000.md`, `docs/en/matrix-1000.md`), dynamic `benchmark` comparing real `v1.0.3` baseline against current tooling, updated CI, and unit/integration test suites (`tests/`).
+
 ## 1.0.3
 
 - Clarify Node.js version requirements and dependency setup for each ecosystem in both READMEs.

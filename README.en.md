@@ -152,12 +152,28 @@ Full operating-system instructions (**Windows via WSL**, **Arch Linux**, **Ubunt
 
 ## Documentation
 
-- [Full installation, usage, and troubleshooting guide](docs/en/guide.md) ([Português](docs/pt-BR/guia.md))
+- [Full installation, `nox.py` CLI, Debug APK/ADB, and troubleshooting guide](docs/en/guide.md) ([Português](docs/pt-BR/guia.md))
 - [Tool-by-tool dependencies](docs/en/dependencies.md) ([Português](docs/pt-BR/dependencias.md))
 - [Safe Android SDK setup](docs/en/android-sdk.md) ([Português](docs/pt-BR/android-sdk.md))
+- [Traceability matrix & counters (`0001`–`1200`)](docs/en/matrix-1000.md) ([Português](docs/pt-BR/matriz-1000.md)) · [JSON Catalog (`0001`–`1000`)](references/catalog-1000.json) · [Validated JSON Matrix](references/matrix-1000.json)
 - [Agent and OS compatibility](COMPATIBILIDADE.md)
 - [Security and operational boundaries](SEGURANCA.md) · [Reporting policy (`SECURITY.md`)](SECURITY.md)
 - [Scoped API contracts and comparison](references/api-contracts.md)
+
+## Local tooling and evidence-based verification
+
+Beginners only need a plain-language request (as shown above). For maintainers and agents, [`scripts/nox.py`](scripts/nox.py) provides modular local commands with no background daemon:
+
+- `python3 scripts/nox.py doctor` — checks JDK, Android SDK, Node.js, Git, Python, and ADB (separating missing optional tools from broken installs).
+- `python3 scripts/nox.py inspect <path>` — detects ecosystem (`keiyoushi`/`yuzono`/`lnreader`), modern (`KeiSource`/`AniSource`/KSP) vs legacy architecture, and deterministic `sourceId`.
+- `python3 scripts/nox.py lab <image|manga|anime|novel|search>` — verifies real image magic bytes (rejecting deceptive HTTP 200 HTML), fractional chapters (`59.5`), `getHosterList`/`getVideoList` & HLS/DRM separation, LNReader readability, and positive search integrity.
+- `python3 scripts/nox.py apk-inspect <file.apk>` & `python3 scripts/nox.py adb <doctor|filter-logcat>` — inspects SHA-256, package, Debug vs Release certificates, and package/PID-isolated Logcat with secret redaction.
+- `python3 scripts/nox.py issues <classify|correlate|fetch>` & `python3 scripts/nox.py security-audit <repo>` — classifies PRs (`VERIFIED_FIX` vs `REVERTED_FIX`/`OPEN_OR_UNMERGED`), fetches real GitHub issues/PRs, and audits Gradle/TLS/DexClassLoader/Trojan Source threats before running builds (`nox.py build`).
+- `python3 scripts/nox.py scaffold` & `python3 scripts/nox.py scenarios` — generates official-pattern Keiyoushi/Yuzono/LNReader sources and validates creation, repair (before→after), and identity update against a local HTTP server.
+- `python3 scripts/nox.py benchmark` & `python3 scripts/nox.py matrix --validate` — runs the Level 1 dynamic benchmark vs real `v1.0.3` + Level 2 HTTP scenarios (`PASS`) and validates the two-dimension `0001`–`1200` matrix (`1,000` original + `200` autonomous).
+- `python3 scripts/nox.py autofix-diagnose <target> --symptom "<error>"` & `python3 scripts/nox.py review-council <target> --enabled` — correlates bugs with Keiyoushi/Yuzono/LNReader PR precedents (excluding unmerged/reverted PRs) and runs real 4-role analyzer council.
+
+Every report strictly distinguishes **`PASS` / `FAIL` / `INCONCLUSIVE` / `BLOCKED` / `NOT_RUN`**: compilation does not prove real-site behavior, and Android device tests are never claimed unless an authorized device was actually exercised.
 
 ## Frequently asked questions
 
