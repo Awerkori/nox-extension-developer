@@ -19,5 +19,17 @@ jobs:
           python-version: '3.11'
       - name: Validate Python syntax
         run: python -c "import ast, pathlib; [ast.parse(p.read_bytes(), filename=str(p)) for d in ('scripts', 'tests') for p in pathlib.Path(d).glob('*.py')]"
-      - name: Run unit tests
+      - name: Run unit, integration, and security tests
         run: python -m unittest discover -s tests -v
+      - name: Validate matrix integrity, scenarios, security, and benchmark
+        run: |
+          python3 scripts/nox.py matrix --validate
+          python3 scripts/nox.py scenarios
+          python3 scripts/nox.py benchmark
+          python3 scripts/nox.py security-audit .
+          python3 scripts/nox.py verify-report README.md
+          python3 scripts/nox.py verify-report README.en.md
+      - name: Verify deterministic packaging allowlist
+        run: |
+          python3 scripts/package.py /tmp/nox-ci-candidate.zip
+          rm -f /tmp/nox-ci-candidate.zip

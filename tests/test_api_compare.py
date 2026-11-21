@@ -65,3 +65,29 @@ class APIComparison(unittest.TestCase):
                 new = api.extract(source.replace(before, after), ecosystem, old['scope'])
                 self.assertFalse(old['complete'])
                 self.assertEqual(api.compare(old, new)['classification'], 'POTENCIALMENTE_INCOMPATIVEL')
+
+    def test_structural_multiline_overloads_and_antipatterns(self):
+        kt = (
+            '@Serializable\n'
+            'data class BadDto(val x: String)\n'
+            'suspend fun fetchChapters(\n'
+            '    id: String,\n'
+            '    page: Int\n'
+            '): List<SChapter> {\n'
+            '    val title = doc.selectFirst("h1")!!.text()\n'
+            '    return emptyList()\n'
+            '}\n'
+            'fun fetchChapters(url: String): List<SChapter> = emptyList()\n'
+        )
+        res = api.extract_structural(kt, 'keiyoushi', 'Source.kt')
+        self.assertIn('fetchChapters', res['symbols'])
+        self.assertIn('fetchChapters#2', res['symbols'])
+        codes = {f['code'] for f in res['quality_findings']}
+        self.assertIn('SERIALIZABLE_DATA_CLASS', codes)
+        self.assertIn('UNSAFE_NOT_NULL', codes)
+
+        ts = "import { fetchApi } from '@/lib/fetch';\nconst x = window.location.href;\n"
+        res_ts = api.extract_structural(ts, 'lnreader', 'plugin.ts')
+        codes_ts = {f['code'] for f in res_ts['quality_findings']}
+        self.assertIn('LNREADER_WRONG_ALIAS', codes_ts)
+        self.assertIn('HERMES_UNSUPPORTED_GLOBAL', codes_ts)
