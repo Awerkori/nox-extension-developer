@@ -1,663 +1,186 @@
 [Português (Brasil)](README.md) | [English](README.en.md)
 
-<p align="center"><img src="assets/banner.svg" alt="Project Nox — Nox Extension Developer" width="100%"></p>
+<p align="center">
+  <img src="assets/nox-emblem.webp" alt="Emblema oficial do Project Nox" width="96" />
+</p>
 
-# Project Nox · Extension Developer
+<h1 align="center">Project Nox · Extension Developer</h1>
 
-Uma **skill gratuita e de código aberto** que ajuda sua IA a criar, corrigir e atualizar extensões. Você descreve o que precisa; a IA consulta as referências oficiais, analisa o site e orienta o desenvolvimento, os testes e a compilação.
+<p align="center">
+  Skill de código aberto para auxiliar agentes de IA na criação, correção e manutenção de extensões.
+</p>
 
-| Conteúdo | Padrão | Aplicativo | Resultado |
+## O que é a Nox Extension Developer?
+
+A **Nox Extension Developer** é uma skill gratuita e de código aberto projetada para orientar agentes de inteligência artificial compatíveis no desenvolvimento, correção, atualização e revisão de extensões de mangás, animes e novels.
+
+Ela **não** é uma IA independente: trata-se de um conjunto estruturado de instruções, contratos e scripts locais carregados pelo agente escolhido. Você descreve o que precisa em linguagem natural, e a IA utiliza a skill para sincronizar referências oficiais, inspecionar padrões de código e orientar implementação, testes e compilação.
+
+> O Project Nox não é afiliado aos projetos de referência listados abaixo. Utilize somente fontes autorizadas e revise o código produzido; a skill auxilia o trabalho técnico, sem garantir funcionamento automático em qualquer site.
+
+## Ecossistemas suportados
+
+| Conteúdo | Referência | Aplicação | Resultado |
 |---|---|---|---|
-| 📚 Mangá | Keiyoushi | Mihon e forks | APK |
-| 🎬 Anime | Yuzono | Aniyomi e forks | APK |
-| 📖 Novel | LNReader | LNReader | Plugin / bundle |
+| Mangá | Keiyoushi | Mihon e aplicativos compatíveis | APK |
+| Anime | Yuzono | Aniyomi e aplicativos compatíveis | APK |
+| Novel | LNReader | LNReader | Plugin ou bundle |
 
-O Project Nox não é afiliado aos projetos de referência. Use apenas sites e conteúdos que você tenha autorização para acessar. A skill auxilia o desenvolvimento, mas não garante funcionamento em qualquer site.
+Cada ecossistema é independente: regras, APIs e exemplos de **Keiyoushi**, **Yuzono** e **LNReader** são mantidos separados e não devem ser misturados entre si.
 
-## 📦 Dependências necessárias
+## Instalação rápida
 
-| Ferramenta | Para que serve | Quando instalar |
-|---|---|---|
-| Git | Consulta repositórios oficiais | Para usar as referências |
-| Python 3 | Executa os scripts da skill | Para usar os scripts |
-| Node.js, npm e NPX | Instalam a skill pelo terminal | Para NPX, Node.js **22.20.0 ou superior**; LNReader exige Node.js **22 ou superior**. Recomendamos Node.js 24 LTS |
-| Java JDK | Compila código Kotlin | Para mangá e anime, na versão exigida pelo projeto |
-| Android SDK, Command-line Tools, plataforma e Build Tools | Preparam e compilam APKs | Para mangá e anime, conforme o projeto |
-| Dependências do LNReader e TypeScript | Desenvolvem plugins de novels | Para novels; use as versões do próprio projeto |
-| ADB e emulador | Testam em dispositivo Android | Opcionais quando não houver teste em dispositivo |
+### Método recomendado: instalação assistida por IA
 
-> **NPX instala a skill, não Java, Android SDK ou as demais ferramentas de desenvolvimento.**
->
-> **Para desenvolver somente novels para LNReader, você não precisa instalar o Android SDK.**
-
-O Gradle Wrapper e outras ferramentas podem acompanhar o projeto. Não é necessário instalá-las globalmente. Veja o [guia de dependências](docs/pt-BR/dependencias.md).
-
-## 💻 Instalação das dependências
-
-### Etapa 1 — 📦 Instalação das dependências básicas
-
-**👇 Clique no nome do seu sistema operacional para expandir o tutorial de instalação.**
-
-<details>
-<summary>🪟 Windows — Clique para expandir</summary>
-
-Abra o PowerShell e execute `wsl --install`. Reinicie se necessário e abra o Ubuntu instalado. Execute os próximos comandos **no terminal Ubuntu do WSL**; Windows nativo não é suportado. WSL não foi homologado.
-
-```bash
-sudo apt update && sudo apt install git python3 nodejs npm curl unzip ca-certificates
-```
-
-Verifique as ferramentas:
-
-```bash
-git --version && python3 --version && node --version && npm --version && npx --version
-```
-
-O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
-
-```bash
-if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
-export NVM_DIR="$HOME/.nvm"
-. "$NVM_DIR/nvm.sh"
-nvm install 24
-nvm use 24
-node --version && npm --version && npx --version
-```
-
-Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
-
-</details>
-
-<details>
-<summary>🍎 macOS — Clique para expandir</summary>
-
-Abra o Terminal. Se faltar Git, execute `xcode-select --install`. Instale Python 3 pelo [instalador oficial](https://www.python.org/downloads/) e Node 24 LTS pelo [instalador oficial](https://nodejs.org/en/download). Esta plataforma não foi homologada.
-
-Verifique as ferramentas:
-
-```bash
-git --version && python3 --version && node --version && npm --version && npx --version
-```
-
-O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
-
-```bash
-if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
-export NVM_DIR="$HOME/.nvm"
-. "$NVM_DIR/nvm.sh"
-nvm install 24
-nvm use 24
-node --version && npm --version && npx --version
-```
-
-Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
-
-</details>
-
-<details>
-<summary>🐧 Arch Linux — Clique para expandir</summary>
-
-Abra o Terminal e instale somente pacotes ausentes:
-
-```bash
-sudo pacman -S --needed git python nodejs npm curl unzip
-```
-
-Verifique as ferramentas:
-
-```bash
-git --version && python3 --version && node --version && npm --version && npx --version
-```
-
-O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
-
-```bash
-if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
-export NVM_DIR="$HOME/.nvm"
-. "$NVM_DIR/nvm.sh"
-nvm install 24
-nvm use 24
-node --version && npm --version && npx --version
-```
-
-Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
-
-</details>
-
-<details>
-<summary>🐧 Ubuntu — Clique para expandir</summary>
-
-Abra o Terminal e instale somente pacotes ausentes:
-
-```bash
-sudo apt update && sudo apt install git python3 nodejs npm curl unzip ca-certificates
-```
-
-Não homologado nesta distribuição.
-
-Verifique as ferramentas:
-
-```bash
-git --version && python3 --version && node --version && npm --version && npx --version
-```
-
-O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
-
-```bash
-if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
-export NVM_DIR="$HOME/.nvm"
-. "$NVM_DIR/nvm.sh"
-nvm install 24
-nvm use 24
-node --version && npm --version && npx --version
-```
-
-Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
-
-</details>
-
-<details>
-<summary>🐧 Debian — Clique para expandir</summary>
-
-Abra o Terminal e instale somente pacotes ausentes:
-
-```bash
-sudo apt update && sudo apt install git python3 nodejs npm curl unzip ca-certificates
-```
-
-Não homologado nesta distribuição.
-
-Verifique as ferramentas:
-
-```bash
-git --version && python3 --version && node --version && npm --version && npx --version
-```
-
-O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
-
-```bash
-if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
-export NVM_DIR="$HOME/.nvm"
-. "$NVM_DIR/nvm.sh"
-nvm install 24
-nvm use 24
-node --version && npm --version && npx --version
-```
-
-Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
-
-</details>
-
-<details>
-<summary>🐧 Fedora — Clique para expandir</summary>
-
-Abra o Terminal e instale somente pacotes ausentes:
-
-```bash
-sudo dnf install git python3 nodejs npm curl unzip coreutils
-```
-
-Não homologado nesta distribuição.
-
-Verifique as ferramentas:
-
-```bash
-git --version && python3 --version && node --version && npm --version && npx --version
-```
-
-O Skills CLI 1.8.1 exige Node.js 22.20.0 ou superior; recomendamos Node 24 LTS. Se sua versão for mais antiga, use o [instalador oficial](https://nodejs.org/en/download) ou, após revisar o [nvm](https://github.com/nvm-sh/nvm), execute:
-
-```bash
-if [ ! -e "$HOME/.nvm" ]; then git clone --branch v0.40.3 --depth 1 https://github.com/nvm-sh/nvm.git "$HOME/.nvm"; fi
-export NVM_DIR="$HOME/.nvm"
-. "$NVM_DIR/nvm.sh"
-nvm install 24
-nvm use 24
-node --version && npm --version && npx --version
-```
-
-Para novels, execute `npm install` dentro do projeto LNReader: ele instala TypeScript e bibliotecas conforme o `package.json`. Para carregar nvm em novos terminais, acrescente `export NVM_DIR="$HOME/.nvm"` e `[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"` ao `~/.bashrc` ou `~/.zshrc` somente após verificar entradas existentes.
-
-</details>
-
-### Etapa 2 — 🤖 Instalação do Android SDK
-
-**Esta etapa é necessária para desenvolver extensões de mangá e anime. Se você deseja desenvolver apenas novels, pode pular esta etapa.**
-
-**👇 Clique no seu sistema operacional para visualizar o tutorial completo do Android SDK.**
-
-<details>
-<summary>🪟 Windows (via WSL) — Clique para expandir</summary>
-
-Execute no terminal Ubuntu do WSL, não no PowerShell. WSL não foi homologado. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
-
-```bash
-sudo apt install openjdk-21-jdk
-```
-
-2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
-
-```bash
-(
-set -eu
-SDK="$HOME/Android/Sdk"
-test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
-test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
-mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
-curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
-echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
-unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
-mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
-)
-```
-
-3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
-
-```bash
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
-sdkmanager --sdk_root="$ANDROID_HOME" --list
-sdkmanager --sdk_root="$ANDROID_HOME" --licenses
-```
-
-4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
-
-```bash
-sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
-java -version && javac -version
-sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
-```
-
-Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
-
-</details>
-
-<details>
-<summary>🍎 macOS — Clique para expandir</summary>
-
-macOS não foi homologado. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
-
-```bash
-brew install --cask temurin@21
-```
-
-2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, baixe o ZIP **Command-line Tools para macOS** do seu processador na [página oficial](https://developer.android.com/studio#command-line-tools-only). Execute `shasum -a 256 ~/Downloads/commandlinetools-*.zip` e compare com o SHA-256 publicado pelo Google. Não continue se for diferente. No Terminal, ajuste `ARQUIVO` para o nome exato baixado e execute; o bloco não substitui uma pasta existente:
-
-```bash
-(
-set -eu
-ARQUIVO="$HOME/Downloads/commandlinetools-mac.zip" # ajuste para o nome baixado / set downloaded name
-SDK="$HOME/Android/Sdk"
-test ! -e "$SDK/cmdline-tools/latest" && test ! -e "$SDK/cmdline-tools/cmdline-tools" || { echo "Existing files: preserve and review"; exit 1; }
-mkdir -p "$SDK/cmdline-tools"
-unzip -q "$ARQUIVO" -d "$SDK/cmdline-tools"
-mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
-)
-```
-
-3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
-
-```bash
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
-sdkmanager --sdk_root="$ANDROID_HOME" --list
-sdkmanager --sdk_root="$ANDROID_HOME" --licenses
-```
-
-4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
-
-```bash
-sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
-java -version && javac -version
-sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
-```
-
-Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
-
-</details>
-
-<details>
-<summary>🐧 Arch Linux — Clique para expandir</summary>
-
-1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
-
-```bash
-sudo pacman -S --needed jdk21-openjdk
-```
-
-2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
-
-```bash
-(
-set -eu
-SDK="$HOME/Android/Sdk"
-test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
-test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
-mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
-curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
-echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
-unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
-mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
-)
-```
-
-3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
-
-```bash
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
-sdkmanager --sdk_root="$ANDROID_HOME" --list
-sdkmanager --sdk_root="$ANDROID_HOME" --licenses
-```
-
-4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
-
-```bash
-sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
-java -version && javac -version
-sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
-```
-
-Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
-
-</details>
-
-<details>
-<summary>🐧 Ubuntu — Clique para expandir</summary>
-
-Não homologado nesta distribuição. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
-
-```bash
-sudo apt install openjdk-21-jdk
-```
-
-2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
-
-```bash
-(
-set -eu
-SDK="$HOME/Android/Sdk"
-test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
-test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
-mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
-curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
-echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
-unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
-mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
-)
-```
-
-3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
-
-```bash
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
-sdkmanager --sdk_root="$ANDROID_HOME" --list
-sdkmanager --sdk_root="$ANDROID_HOME" --licenses
-```
-
-4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
-
-```bash
-sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
-java -version && javac -version
-sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
-```
-
-Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
-
-</details>
-
-<details>
-<summary>🐧 Debian — Clique para expandir</summary>
-
-Não homologado nesta distribuição. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
-
-```bash
-sudo apt install openjdk-21-jdk
-```
-
-2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
-
-```bash
-(
-set -eu
-SDK="$HOME/Android/Sdk"
-test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
-test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
-mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
-curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
-echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
-unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
-mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
-)
-```
-
-3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
-
-```bash
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
-sdkmanager --sdk_root="$ANDROID_HOME" --list
-sdkmanager --sdk_root="$ANDROID_HOME" --licenses
-```
-
-4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
-
-```bash
-sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
-java -version && javac -version
-sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
-```
-
-Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
-
-</details>
-
-<details>
-<summary>🐧 Fedora — Clique para expandir</summary>
-
-Não homologado nesta distribuição. 1. Verifique `java -version` e `javac -version`. Se o projeto exigir JDK 21 e ele estiver ausente, execute o comando abaixo; para outra versão consulte os pacotes disponíveis:
-
-```bash
-sudo dnf install java-21-openjdk-devel
-```
-
-2. Se `sdkmanager --version` funcionar, reutilize a instalação e pule o download. Caso contrário, execute o bloco abaixo. Ele usa as Command-line Tools oficiais para Linux x86-64, verifica o SHA-256 e não sobrescreve uma instalação existente. A forma exata do bloco não foi testada integralmente; confira a [versão e checksum oficiais](https://developer.android.com/studio#command-line-tools-only):
-
-```bash
-(
-set -eu
-SDK="$HOME/Android/Sdk"
-test ! -e "$SDK/cmdline-tools/latest" || { echo "Existing SDK: preserve and reuse"; exit 1; }
-test ! -e "$SDK/cmdline-tools/cmdline-tools" && test ! -e "$SDK/downloads/commandlinetools.zip" || { echo "Existing files: preserve and review"; exit 1; }
-mkdir -p "$SDK/cmdline-tools" "$SDK/downloads"
-curl -fL -o "$SDK/downloads/commandlinetools.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
-echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $SDK/downloads/commandlinetools.zip" | sha256sum -c -
-unzip -q "$SDK/downloads/commandlinetools.zip" -d "$SDK/cmdline-tools"
-mv "$SDK/cmdline-tools/cmdline-tools" "$SDK/cmdline-tools/latest"
-)
-```
-
-3. Se seu SDK estiver em outro caminho, substitua `ANDROID_HOME` pelo caminho existente. Os comandos listam os componentes e pedem revisão das licenças; aceite-as pessoalmente:
-
-```bash
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
-sdkmanager --sdk_root="$ANDROID_HOME" --list
-sdkmanager --sdk_root="$ANDROID_HOME" --licenses
-```
-
-4. Confira as versões exigidas pelo repositório. O exemplo abaixo é apenas para um projeto que exige API 37.0 e Build Tools 37.0.0; substitua se necessário:
-
-```bash
-sdkmanager --sdk_root="$ANDROID_HOME" 'platforms;android-37.0' 'build-tools;37.0.0'
-java -version && javac -version
-sdkmanager --sdk_root="$ANDROID_HOME" --list_installed
-```
-
-Para testar em dispositivo, instale ADB opcionalmente com `sdkmanager --sdk_root="$ANDROID_HOME" "platform-tools"` e confira `adb version`; emulador também é opcional. Para persistir as variáveis, adicione as duas linhas `export` ao `~/.bashrc` (Bash) ou `~/.zshrc` (Zsh), somente após verificar conflitos; abra outro terminal. Não sobrescreva configurações existentes. Gradle e Kotlin vêm do sistema de build do repositório via `./gradlew`, sem instalação global obrigatória.
-
-</details>
-
-## Etapa 3 — 📥 Instalação da skill
-
-### Método 1 — Peça à sua IA ⭐ (Recomendado)
-
-Sua IA verificará as dependências, ajudará na instalação e configurará a skill mediante sua autorização. Abra sua IA agêntica, copie o texto abaixo, envie e autorize apenas as operações com as quais concordar:
+Copie o texto abaixo, cole em seu agente de IA compatível e autorize apenas as etapas com as quais concordar:
 
 ```text
-Instale e configure a skill Nox Extension Developer:
+Instale e configure a skill Nox Extension Developer de:
 https://github.com/ProjectNox-org/nox-extension-developer
 
-Consulte a documentação oficial e identifique meu sistema operacional e minha IA. Pergunte se desejo trabalhar com mangá, anime, novels ou todos. Verifique as ferramentas existentes e instale somente as necessárias, incluindo Java e Android SDK apenas quando aplicável. Solicite minha autorização antes de instalações, operações administrativas ou aceite de licenças. Não sobrescreva configurações nem exponha credenciais. Instale a skill via NPX, confirme sua descoberta em uma nova sessão e explique como criar, corrigir ou atualizar uma extensão.
+Identifique meu sistema operacional e meu agente de IA, consulte a documentação
+oficial e pergunte se desejo trabalhar com mangá, anime, novels ou todos.
+Verifique as ferramentas existentes e prefira:
+npx skills add ProjectNox-org/nox-extension-developer
+
+Configure apenas as dependências necessárias (incluindo Java e Android SDK
+somente se aplicável). Peça minha autorização antes de alterações relevantes,
+comandos administrativos ou aceite de licenças; não sobrescreva configurações nem
+exponha credenciais. Após concluir, valide o carregamento da skill em uma nova
+sessão e informe como começar e o que não foi testado.
 ```
 
-[Baixar prompt em português](prompts/install-pt-BR.txt) · [English prompt](prompts/install-en.txt) · [Instalação manual](docs/pt-BR/guia.md#instalação)
+Prompt pronto em arquivo: [`prompts/install-pt-BR.txt`](prompts/install-pt-BR.txt) · [`prompts/install-en.txt`](prompts/install-en.txt).
 
-### Método 2 — Instalação manual via NPX
+### Método alternativo: instalação manual via NPX
 
-Abra um terminal e execute:
+Execute no terminal:
 
 ```bash
 npx skills add ProjectNox-org/nox-extension-developer
 ```
 
-Escolha sua IA quando o instalador perguntar. Para instalar globalmente no OpenCode:
+Selecione seu agente quando solicitado (ou informe o alvo diretamente, por exemplo `--global --agent opencode`). Também existe o instalador manual por link simbólico em [`scripts/install.py`](scripts/install.py).
 
-```bash
-npx skills add ProjectNox-org/nox-extension-developer --global --agent opencode
+- Requer Node.js e npm compatíveis (nos testes com a Skills CLI `1.8.1`, foi exigido Node.js `22.20.0+`; verifique os requisitos atuais da CLI).
+- `npx skills add` instala **somente** a skill — ele não instala nem configura Java JDK, Android SDK ou dependências do LNReader.
+- Após instalar, **abra uma nova sessão do agente** e peça explicitamente: `Use a skill nox-extension-developer`. Consulte os detalhes completos no [guia de instalação](docs/pt-BR/guia.md).
+
+## Como usar na prática
+
+Substitua os campos entre colchetes pelas informações do site ou repositório desejado.
+
+### Mangá — criar (Keiyoushi / Mihon)
+
+```text
+Use a skill nox-extension-developer para criar uma extensão de mangá seguindo o
+padrão Keiyoushi para o Mihon a partir deste site: [URL DO SITE].
 ```
 
-Abra uma nova sessão da IA e peça: `Use a skill nox-extension-developer`. Confira se ela informa que carregou a skill. Para instalar em outro agente, consulte as opções de `npx skills add --help` e escolha o identificador correspondente. O instalador e as cópias locais podem usar pastas diferentes; consulte o destino informado na tela.
+### Mangá — corrigir (Keiyoushi / Mihon)
 
-## 🚀 Como utilizar na prática
-
-Substitua os textos entre colchetes pelo endereço do site ou do código.
-
-### 📚 Mangá — criar
 ```text
-Crie uma extensão de mangá seguindo o padrão Keiyoushi para o Mihon deste site: [URL DO SITE].
-```
-
-### 📚 Mangá — corrigir
-```text
-Corrija uma extensão de mangá seguindo o padrão Keiyoushi.
-
-Repositório: [LINK DO REPOSITÓRIO DO KEIYOUSHI OU PROJECT NOX]
+Use a skill nox-extension-developer para corrigir uma extensão de mangá no
+padrão Keiyoushi.
+Repositório: [REPOSITÓRIO KEIYOUSHI OU PROJECT NOX]
 Nome da extensão: [NOME DA EXTENSÃO]
-
-Problema:
-Os capítulos não aparecem e as páginas não carregam.
+Problema: [ex.: capítulos não aparecem ou páginas não carregam]
 ```
 
-Repositórios: [Keiyoushi](https://github.com/keiyoushi/extensions-source) · [Project Nox](https://github.com/Awerkori/manga-fonte-extensoes). Escolha o repositório, informe o nome da extensão e descreva o problema; a IA poderá localizar o código-fonte.
+Repositórios: [Keiyoushi](https://github.com/keiyoushi/extensions-source) · [Project Nox](https://github.com/ProjectNox-org/manga-fonte-extensoes).
 
-### 🎬 Anime — criar
+### Anime — criar (Yuzono / Aniyomi)
+
 ```text
-Crie uma extensão de anime seguindo o padrão Yuzono para o Aniyomi deste site: [URL DO SITE].
+Use a skill nox-extension-developer para criar uma extensão de anime seguindo o
+padrão Yuzono para o Aniyomi a partir deste site: [URL DO SITE].
 ```
 
-### 🎬 Anime — corrigir
-```text
-Corrija uma extensão de anime seguindo o padrão Yuzono.
+### Anime — corrigir (Yuzono / Aniyomi)
 
-Repositório: [LINK DO REPOSITÓRIO DO YUZONO OU PROJECT NOX]
+```text
+Use a skill nox-extension-developer para corrigir uma extensão de anime no padrão
+Yuzono.
+Repositório: [REPOSITÓRIO YUZONO OU PROJECT NOX]
 Nome da extensão: [NOME DA EXTENSÃO]
-
-Problema:
-Os episódios não carregam e os vídeos não reproduzem.
+Problema: [ex.: episódios não listam ou fontes de vídeo falham]
 ```
 
-Repositórios: [Yuzono](https://github.com/yuzono/anime-extensions) · [Project Nox](https://github.com/Awerkori/anime-fonte-extensoes). Escolha o repositório, informe o nome da extensão e descreva o problema; a IA poderá localizar o código-fonte.
+Repositórios: [Yuzono](https://github.com/yuzono/anime-extensions) · [Project Nox](https://github.com/ProjectNox-org/anime-fonte-extensoes).
 
-### 📖 Novel — criar
+### Novel — criar (LNReader)
+
 ```text
-Crie uma extensão de novel para o LNReader deste site: [URL DO SITE].
+Use a skill nox-extension-developer para criar um plugin de novel seguindo o
+padrão LNReader a partir deste site: [URL DO SITE].
 ```
 
-### 📖 Novel — corrigir
+### Novel — corrigir (LNReader)
+
 ```text
-Corrija uma extensão de novel seguindo o padrão LNReader.
-
-Repositório: [LINK DO REPOSITÓRIO DO LNREADER]
-Nome da extensão: [NOME DA EXTENSÃO]
-
-Problema:
-A pesquisa não funciona e os capítulos não carregam.
+Use a skill nox-extension-developer para corrigir um plugin de novel no padrão
+LNReader.
+Repositório: https://github.com/LNReader/lnreader-plugins
+Nome do plugin: [NOME DO PLUGIN]
+Problema: [ex.: busca sem resultados ou capítulos vazios]
 ```
 
-Repositório: [LNReader](https://github.com/LNReader/lnreader-plugins). Informe o repositório, o nome da extensão e o problema; a IA poderá localizar o código-fonte.
+Para atualizar uma extensão existente, envie o código-fonte e peça para preservar a compatibilidade com a API local. Sempre peça o caminho do APK/bundle gerado e os passos de validação.
 
-Para atualizar uma extensão, envie seu código e peça à IA que preserve a compatibilidade. Peça o caminho do APK ou bundle e instruções para testá-lo. Revise o resultado e use somente fontes autorizadas.
+## Dependências
 
-## 🤖 Compatibilidade com IAs agênticas
+Separe o que é necessário para **executar a skill** do que é exigido para **compilar extensões**:
 
-| Agente | Status |
-|---|---|
-| [OpenCode](https://opencode.ai/) | ✅ Testado |
-| [Codex](https://developers.openai.com/codex/) | ⚪ Não testado |
-| [Claude Code](https://code.claude.com/) | ⚪ Não testado |
-| [Google Antigravity](https://antigravity.google/) | ✅ Testado |
-| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | ⚪ Não testado |
+- **Skill e scripts locais:** **Git** e **Python 3** (ambiente POSIX em Linux, macOS ou **Windows via WSL** — `scripts/references.py` usa `fcntl`); **Node.js e npm** para usar `npx skills`.
+- **Mangá e Anime (APK):** **Java JDK** e **Android SDK** (`Command-line Tools`, plataforma Android e `Build Tools`) nas versões definidas pelo repositório de destino (`compileSdk` e Gradle Wrapper `./gradlew`). Nos testes locais do projeto foram usados JDK 21, Android SDK 37.0 e Build Tools 36.0.0/37.0.0 — trate esses valores apenas como referência de teste, não como requisito fixo universal.
+- **Novels (LNReader):** **Node.js** compatível (no projeto LNReader costuma-se usar Node 22+) e dependências locais via `npm install` (TypeScript e bibliotecas do repositório). **Quem trabalha exclusivamente com novels não precisa instalar o Android SDK.**
 
-A skill foi desenvolvida e testada com OpenCode no ambiente Arch Linux do desenvolvedor. Outros agentes e sistemas podem ser compatíveis, mas não foram homologados.
+Tutoriais completos por sistema operacional (**Windows via WSL**, **Arch Linux**, **Ubuntu**, **Debian**, **Fedora** e **macOS**):
+[Preparação por sistema](docs/pt-BR/guia.md#preparação-por-sistema) · [Dependências](docs/pt-BR/dependencias.md) · [Android SDK](docs/pt-BR/android-sdk.md).
 
-## ❓ Perguntas frequentes
+## Compatibilidade com agentes
 
-**Preciso saber programar?** Não para começar, mas revisar e manter extensões pode exigir ajuda técnica.
+| Agente | Estado | Observação |
+|---|---|---|
+| [OpenCode](https://opencode.ai/) | ✅ Testado | Link instalado e carregamento verificados no OpenCode local `v2.2.7` em Arch Linux |
+| [Codex](https://developers.openai.com/codex/) | 🟡 Documentado (não testado) | Destino `~/.agents/skills/` preparado em [`scripts/install.py`](scripts/install.py); execução não testada |
+| [Claude Code](https://code.claude.com/) | 🟡 Documentado (não testado) | Destino `~/.claude/skills/` preparado em [`scripts/install.py`](scripts/install.py); links e execução não testados |
+| [Google Antigravity](https://antigravity.google/) | 🟡 Documentado (não testado) | Destino `~/.gemini/antigravity/skills/` documentado; instalação e execução não homologadas |
+| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | ⚪ Não verificado | Sem destino dedicado nem validação no repositório |
 
-**A skill é gratuita? Preciso pagar pela IA?** A skill é gratuita. Custos e cotas dependem do agente e do modelo escolhidos.
+Os testes oficiais ocorreram em **Arch Linux**; outras distribuições Linux, macOS e Windows (via WSL para scripts POSIX) não foram homologados. Veja [`COMPATIBILIDADE.md`](COMPATIBILIDADE.md).
 
-**Preciso instalar uma IA local?** Não necessariamente; depende do serviço que você usar.
+## Documentação
 
-**Preciso do Android SDK?** Para compilar APKs de mangá ou anime, sim. Para apenas LNReader, não.
+- [Guia completo de instalação, uso e solução de problemas](docs/pt-BR/guia.md) ([English](docs/en/guide.md))
+- [Dependências por ferramenta](docs/pt-BR/dependencias.md) ([English](docs/en/dependencies.md))
+- [Instalação segura do Android SDK](docs/pt-BR/android-sdk.md) ([English](docs/en/android-sdk.md))
+- [Compatibilidade com agentes e sistemas](COMPATIBILIDADE.md)
+- [Segurança e limites operacionais](SEGURANCA.md) · [Política de reporte (`SECURITY.md`)](SECURITY.md)
+- [Contratos e comparação de APIs](references/api-contracts.md)
 
-**Posso usar para criar ou corrigir extensões próprias e contribuir?** Sim, respeitando os direitos e regras dos sites e projetos envolvidos.
+## Perguntas frequentes
 
-**Minha IA não reconheceu a skill.** Abra uma nova sessão, peça seu nome explicitamente e confira o destino informado pelo instalador. Veja [solução de problemas](docs/pt-BR/guia.md#solução-de-problemas).
+- **Preciso saber programar?** Não para iniciar com a IA, mas revisar alterações, testar casos difíceis e manter extensões pode exigir apoio técnico.
+- **A skill é gratuita?** Sim. Custos, limites e cotas dependem apenas do agente e do modelo de IA escolhidos.
+- **Preciso instalar o Android SDK?** Sim apenas para compilar APKs de mangá (Keiyoushi) ou anime (Yuzono). Para plugins LNReader de novels, **não**.
+- **Quais agentes são compatíveis?** O funcionamento foi verificado no OpenCode (`v2.2.7`); Codex, Claude Code e Google Antigravity possuem caminhos documentados sem homologação completa, e Hermes Agent não foi verificado.
+- **O que fazer se a skill não for reconhecida?** Abra uma nova sessão do agente, solicite `Use nox-extension-developer` pelo nome exato e confira o caminho/link de instalação no [guia de solução de problemas](docs/pt-BR/guia.md#solução-de-problemas).
+- **Onde estão as instruções de atualização ou remoção?** Veja `npx skills update --help`, `npx skills remove --help` e as instruções manuais na seção de [instalação e remoção do guia](docs/pt-BR/guia.md#instalação).
 
-**Como atualizo ou removo?** Consulte a CLI com `npx skills update --help` ou `npx skills remove --help`; para o instalador manual, preserve a pasta de origem e confira o link antes de removê-lo.
+## Suporte e contribuições
 
-## 🤝 Suporte e contribuições
+- [Issues](https://github.com/ProjectNox-org/nox-extension-developer/issues) — Relate bugs reproduzíveis ou divergências técnicas.
+- [Discussions](https://github.com/ProjectNox-org/nox-extension-developer/discussions) — Tire dúvidas e proponha ideias.
+- [Pull Requests](https://github.com/ProjectNox-org/nox-extension-developer/pulls) — Envie melhorias conforme [`CONTRIBUTING.md`](CONTRIBUTING.md).
+- [Releases](https://github.com/ProjectNox-org/nox-extension-developer/releases) — Acompanhe versões lançadas.
 
-- [Issues](https://github.com/ProjectNox-org/nox-extension-developer/issues): reporte problemas reproduzíveis.
-- [Discussions](https://github.com/ProjectNox-org/nox-extension-developer/discussions): tire dúvidas e compartilhe ideias.
-- [Pull Requests](https://github.com/ProjectNox-org/nox-extension-developer/pulls): envie melhorias; leia [como contribuir](CONTRIBUTING.md).
-- [Releases](https://github.com/ProjectNox-org/nox-extension-developer/releases): acompanhe atualizações.
+**Aviso de segurança:** nunca publique senhas, tokens, chaves ou dados pessoais em issues ou PRs. Reporte vulnerabilidades exclusivamente pelo fluxo descrito em [`SECURITY.md`](SECURITY.md).
 
-Nunca publique senhas, tokens ou dados pessoais. Para vulnerabilidades, use o canal descrito em [SECURITY.md](SECURITY.md).
+**Ecossistema Project Nox:** [Central Oficial](https://projectnox-org.github.io/) · [Project Nox Mangá](https://github.com/ProjectNox-org/project-nox-manga) · [Importer](https://github.com/ProjectNox-org/project-nox-importer) · [Extensões de Mangá](https://github.com/ProjectNox-org/manga-extensoes) ([fonte](https://github.com/ProjectNox-org/manga-fonte-extensoes)) · [Extensões de Anime](https://github.com/ProjectNox-org/anime-extensoes) ([fonte](https://github.com/ProjectNox-org/anime-fonte-extensoes)) · [Central de Solicitações](https://github.com/ProjectNox-org/project-nox-requests) · [Tracker](https://github.com/ProjectNox-org/project-nox-tracker).
 
-## 🔗 Projetos relacionados
+## Créditos e licenciamento
 
-- [Plataforma Web de Mangá](https://github.com/Awerkori/project-nox-manga) — leitor e plataforma web.
-- [Importer](https://github.com/Awerkori/project-nox-importer) — importação de conteúdo.
-- [Extensões de Mangá](https://github.com/Awerkori/manga-extensoes) · [Código-fonte](https://github.com/Awerkori/manga-fonte-extensoes).
-- [Extensões de Anime](https://github.com/Awerkori/anime-extensoes) · [Código-fonte](https://github.com/Awerkori/anime-fonte-extensoes).
-- [Central de Pedidos](https://github.com/Awerkori/project-nox-requests) · [Tracker](https://github.com/Awerkori/project-nox-tracker).
+Criado por [**Awerkori**](https://github.com/Awerkori) para o [**Project Nox**](https://github.com/ProjectNox-org). Os projetos [Keiyoushi](https://github.com/keiyoushi/extensions-source), [Yuzono](https://github.com/yuzono/anime-extensions), [LNReader](https://github.com/LNReader/lnreader-plugins) e o padrão [Agent Skills](https://agentskills.io/) são referências técnicas independentes sem vínculo ou afiliação; veja [`ATRIBUICOES.md`](ATRIBUICOES.md).
 
-## 🌟 Créditos e reconhecimento
-
-Criado por **Awerkori** para o **Project Nox**, com agradecimento à comunidade e aos colaboradores. [Keiyoushi](https://github.com/keiyoushi/extensions-source), [Yuzono](https://github.com/yuzono/anime-extensions), [LNReader](https://github.com/LNReader/lnreader-plugins) e o padrão [Agent Skills](https://agentskills.io/) são referências técnicas independentes. Consulte [atribuições](ATRIBUICOES.md).
-
-## ⚖️ Licença e Copyright
-
-Copyright © 2026 Awerkori. Software livre sob **GNU Affero General Public License versão 3.0 (`AGPL-3.0-only`)**. Leia o texto integral em [LICENSE](LICENSE).
-
-> This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License, version 3. It is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-### 📌 Interação Remota de Rede (GNU AGPLv3 Seção 13)
-
-Ao modificar o programa e permitir interação remota pela rede, ofereça aos usuários remotos acesso ao código-fonte correspondente da versão modificada, conforme a seção 13 da licença.
-
-### 🛡️ Proteção de Identidade e Marca (AGPLv3 Seção 7(e))
-
-A licença do software não concede automaticamente autorização para usar nomes ou logotipos do Project Nox e Awerkori para insinuar representação, aprovação ou endosso oficial.
-
-### 🌐 Utilização e Redistribuição
-
-Você pode usar, estudar, modificar e redistribuir a skill gratuitamente, observando os termos da AGPLv3 e as licenças de terceiros aplicáveis.
-
-### ⚖️ Isenção de Responsabilidade
-
-A skill auxilia o desenvolvimento; ela não concede direitos sobre conteúdo de terceiros nem garante o funcionamento das extensões. O programa é fornecido sem garantias, conforme a licença.
+Este software é licenciado sob a **GNU Affero General Public License v3.0 (`AGPL-3.0-only`)** — consulte [`LICENSE`](LICENSE) para o texto integral (incluindo obrigações de código-fonte para uso remoto por rede na Seção 13 e preservação das marcas **Project Nox** e **Awerkori** na Seção 7(e)). A licença aplica-se exclusivamente ao código da skill, sem garantias e sem conceder direitos sobre conteúdos, sites ou obras de terceiros.
