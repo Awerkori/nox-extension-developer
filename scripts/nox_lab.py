@@ -6,6 +6,7 @@ from __future__ import annotations
 import datetime as dt
 import hashlib
 import html
+from html.parser import HTMLParser
 import json
 from pathlib import Path
 import re
@@ -577,7 +578,12 @@ def audit_anime_content(
 # 5. Nox Novel / LNReader Integrity Lab
 # =============================================================================
 
-_NAV_ONLY_RE = re.compile(r'(?i)^(?:\s*(?:prev(?:ious)?|next|back\s+to\s+top|table\s+of\s+contents|chapters?|home)\s*[|/•\-]*)+$')
+_NAV_TOKENS = frozenset({'prev', 'previous', 'next', 'back', 'to', 'top', 'table', 'of', 'contents', 'chapter', 'chapters', 'home'})
+
+
+def _is_nav_only_text(text: str) -> bool:
+    tokens = [tok.lower() for tok in re.split(r'[\s|/•\-]+', text.strip()) if tok]
+    return bool(tokens) and all(tok in _NAV_TOKENS for tok in tokens)
 
 
 def audit_novel_content(
@@ -601,7 +607,7 @@ def audit_novel_content(
     text_only = ' '.join(text_only.split())
     if not text_only:
         issues.append('empty_chapter_text')
-    elif _NAV_ONLY_RE.match(text_only):
+    elif _is_nav_only_text(text_only):
         issues.append('chapter_body_is_navigation_links_only')
     elif len(text_only) < min_readable_chars:
         issues.append(f'truncated_or_too_short_chapter:{len(text_only)}_chars')
@@ -988,11 +994,59 @@ def map_image_servers_and_routes(html_or_har: str, base_url: str) -> dict[str, A
     }
 
 
+class _ClutterStripper(HTMLParser):
+    _SKIP_TAGS = frozenset({'nav', 'aside', 'footer', 'script', 'style'})
+    _CLUTTER_RE = re.compile(r'(?i)(?:ad-|advert|banner|promo|sponsor|cookie)')
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=False)
+        self._skip_stack: list[str] = []
+        self.parts: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        t = tag.lower()
+        if self._skip_stack:
+            if t == self._skip_stack[-1]:
+                self._skip_stack.append(t)
+            return
+        if t in self._SKIP_TAGS:
+            self._skip_stack.append(t)
+            return
+        if t in {'div', 'section'}:
+            cls_id = ' '.join((v or '') for k, v in attrs if k.lower() in {'class', 'id'})
+            if self._CLUTTER_RE.search(cls_id):
+                self._skip_stack.append(t)
+                return
+        attr_str = ''.join(f' {k}="{html.escape(v or "", quote=True)}"' for k, v in attrs)
+        self.parts.append(f'<{tag}{attr_str}>')
+
+    def handle_endtag(self, tag: str) -> None:
+        t = tag.lower()
+        if self._skip_stack:
+            if t == self._skip_stack[-1]:
+                self._skip_stack.pop()
+            return
+        self.parts.append(f'</{tag}>')
+
+    def handle_data(self, data: str) -> None:
+        if not self._skip_stack:
+            self.parts.append(data)
+
+    def handle_entityref(self, name: str) -> None:
+        if not self._skip_stack:
+            self.parts.append(f'&{name};')
+
+    def handle_charref(self, name: str) -> None:
+        if not self._skip_stack:
+            self.parts.append(f'&#{name};')
+
+
 def extract_smart_metadata(raw_html: str) -> dict[str, Any]:
     """Extract work metadata ignoring nav/aside/footer/ad clutter using semantic selectors, OpenGraph & JSON-LD (0041)."""
-    # Strip ads, sidebars, navs, and footers before parsing metadata
-    cleaned = re.sub(r'(?is)<(?:nav|aside|footer|script|style)[^>]*>.*?</(?:nav|aside|footer|script|style)>', ' ', raw_html)
-    cleaned = re.sub(r'(?is)<(?:div|section)[^>]+(?:class|id)\s*=\s*["\'][^"\']*(?:ad-|advert|banner|promo|sponsor|cookie)[^"\']*["\'][^>]*>.*?</(?:div|section)>', ' ', cleaned)
+    stripper = _ClutterStripper()
+    stripper.feed(raw_html)
+    stripper.close()
+    cleaned = ''.join(stripper.parts)
 
     og_title = re.search(r'(?is)<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)["\']', raw_html)
     h1_title = re.search(r'(?is)<h1[^>]*>(.*?)</h1>', cleaned)

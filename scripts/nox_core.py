@@ -218,7 +218,7 @@ _HARDCODED_SECRET_PATTERNS: tuple[re.Pattern[str], ...] = (
 )
 
 
-def scan_secrets(text: str) -> list[dict[str, str]]:
+def scan_hardcoded_literals(text: str) -> list[dict[str, str]]:
     """Detect potential hardcoded secret literals in source code without flagging variable types/names."""
     hits: list[dict[str, str]] = []
     for idx, line in enumerate(text.splitlines(), start=1):
@@ -231,6 +231,9 @@ def scan_secrets(text: str) -> list[dict[str, str]]:
                 })
                 break
     return hits
+
+
+scan_secrets = scan_hardcoded_literals
 
 
 def scan_prompt_injection(text: str, source_label: str = 'remote-data') -> dict[str, Any]:

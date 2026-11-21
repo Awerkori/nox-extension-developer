@@ -18,7 +18,7 @@ from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
 import zipfile
 
-from nox_core import sanitize_text, scan_bidi_controls, scan_secrets
+from nox_core import sanitize_text, scan_bidi_controls, scan_hardcoded_literals
 
 
 _GRADLE_EXEC_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
@@ -129,8 +129,8 @@ def audit_untrusted_pr_or_repo(repo_path: Path | str) -> dict[str, Any]:
                     findings.append({'severity': sev, 'kind': kind, 'file': rel})
             for bh in scan_bidi_controls(txt):
                 findings.append({'severity': 'FAIL', 'kind': 'trojan_source_bidi_control', 'file': rel, **bh})
-            for sh in scan_secrets(txt):
-                findings.append({'severity': 'FAIL', 'kind': 'hardcoded_secret_candidate', 'file': rel, 'line': sh['line']})
+            for sh in scan_hardcoded_literals(txt):
+                findings.append({'severity': 'FAIL', 'kind': 'hardcoded_secret_candidate', 'file': rel, 'line': int(sh['line'])})
 
     has_fail = any(f['severity'] == 'FAIL' for f in findings)
     return {
@@ -759,7 +759,7 @@ def _extract_binary_symbols_from_artifact(artifact: Path) -> set[str]:
         for m in re.finditer(rb'L[a-zA-Z0-9_$/]{4,160};', blob):
             symbols.add(m.group(0).decode('ascii', errors='ignore'))
         # Match JVM method binary descriptors like (ILjava/lang/String;)Ljava/util/List;
-        for m in re.finditer(rb'\([A-Z\[][A-Za-z0-9_$/;\[{0,120}\)[A-Z\[][A-Za-z0-9_$/;]{0,80}', blob):
+        for m in re.finditer(rb'\((?:\[|[A-Z])(?:[A-Za-z0-9_$/;]|\[){0,120}\)(?:\[|[A-Z])[A-Za-z0-9_$/;]{0,80}', blob):
             symbols.add(m.group(0).decode('ascii', errors='ignore'))
     return symbols
 

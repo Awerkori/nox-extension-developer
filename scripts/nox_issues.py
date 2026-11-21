@@ -554,10 +554,11 @@ def inspect_pr_diff_and_extract_mechanism(
     title_low = str(pr_record.get('title', '')).lower()
     joined_added = '\n'.join(added_lines).lower()
     joined_meta = f"{title_low} {pr_record.get('body', '')} {joined_added}".lower()
+    meta_hosts = {(urllib.parse.urlsplit(u).hostname or '').lower() for u in re.findall(r'https?://[^\s<>"\')\]`]+', joined_meta)}
     if 'encryptedpages' in joined_added or '__r' in joined_added or 'decrypt' in joined_meta:
         root_cause = 'OBFUSCATED_OR_ENCRYPTED_PAGE_PAYLOAD'
         mechanism = 'Decode encrypted reader JSON DTO field (__r -> pages/signatures) cleanly without breaking manga slug.'
-    elif 'lh3.googleusercontent.com' in joined_meta or 'drive.google.com' in joined_meta or 'sec-fetch-site' in joined_meta:
+    elif bool(meta_hosts & {'lh3.googleusercontent.com', 'drive.google.com'}) or 'sec-fetch-site' in joined_meta or '/uc?id=' in joined_meta:
         root_cause = 'IMAGE_HOST_CROSS_SITE_403'
         mechanism = 'Rewrite restricted Drive /uc?id= URLs to canonical lh3.googleusercontent.com/d/<id> host in pageListParse.'
     elif 'defaultcover' in joined_meta or 'deprecated' in title_low:
@@ -623,9 +624,11 @@ def inspect_pr_diff_and_extract_mechanism(
 
 def _rewrite_drive_url_principle(url: str) -> str:
     """Adapt PR #21153 principle: map drive.google.com/uc?id=<ID> to lh3.googleusercontent.com/d/<ID>."""
-    m = re.search(r'drive\.google\.com/uc\?(?:[^#]*&)?id=([A-Za-z0-9_-]+)', url)
-    if m:
-        return f'https://lh3.googleusercontent.com/d/{m.group(1)}'
+    sp = urllib.parse.urlsplit(url)
+    if (sp.hostname or '').lower() == 'drive.google.com' and sp.path.rstrip('/') == '/uc':
+        ids = urllib.parse.parse_qs(sp.query).get('id')
+        if ids and re.fullmatch(r'[A-Za-z0-9_-]+', ids[0]):
+            return f'https://lh3.googleusercontent.com/d/{ids[0]}'
     return url
 
 

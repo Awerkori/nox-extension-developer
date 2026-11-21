@@ -1088,7 +1088,8 @@ def audit_npmrc_safety(npmrc_text: str) -> dict[str, Any]:
     issues = []
     for m in re.finditer(r'^\s*registry\s*=\s*(.+)$', npmrc_text, re.M):
         reg = m.group(1).strip()
-        if not reg.startswith('https://registry.npmjs.org'):
+        sp = urlsplit(reg)
+        if sp.scheme.lower() != 'https' or (sp.hostname or '').lower() != 'registry.npmjs.org':
             issues.append(f'custom_npm_registry:{reg}')
     return {'status': 'FAIL' if issues else 'PASS', 'issues': issues}
 
