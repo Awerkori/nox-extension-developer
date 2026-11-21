@@ -178,14 +178,61 @@ def _sync(name, root, fetch, now, resolver):
         raise RuntimeError(f'No complete verified cache; reference check failed: {exc}') from exc
 
 
+def status(name, root, max_age_hours=72, now=None):
+    """Inspect local verified snapshot without network access and report freshness and injection signals."""
+    root = Path(root)
+    snap = read_cache(root, name)
+    recovered = False
+    if not snap:
+        snap = previous_cache(root, name)
+        recovered = bool(snap)
+    if not snap:
+        return {
+            'status': 'MISSING',
+            'ecosystem': name,
+            'snapshot': None,
+            'commit': None,
+            'is_stale': True,
+            'warning': 'No intact verified snapshot cached; run sync when online.',
+        }
+    snapshot_path, manifest = snap
+    current_time = now or dt.datetime.now(dt.timezone.utc)
+    retrieved = dt.datetime.fromisoformat(manifest['retrieved_at'])
+    if retrieved.tzinfo is None:
+        retrieved = retrieved.replace(tzinfo=dt.timezone.utc)
+    age_hours = round(max(0.0, (current_time - retrieved).total_seconds() / 3600.0), 2)
+    injection_warnings = []
+    for rel in manifest['files']:
+        content = (snapshot_path / 'docs' / rel).read_text(errors='replace')
+        if re.search(r'(?i)\b(ignore|disregard)\s+(?:all\s+)?(?:previous|prior|system)\s+instructions?\b', content):
+            injection_warnings.append(rel)
+    return {
+        'status': 'verified_cached',
+        'ecosystem': name,
+        'repository': manifest['repository'],
+        'branch': manifest['branch'],
+        'commit': manifest['commit'],
+        'retrieved_at': manifest['retrieved_at'],
+        'age_hours': age_hours,
+        'is_stale': age_hours > max_age_hours,
+        'snapshot': str(snapshot_path),
+        'files': sorted(manifest['files'].keys()),
+        'recovered_from_previous': recovered,
+        'prompt_injection_signals_in_docs': injection_warnings,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('action', choices=['sync'])
+    parser.add_argument('action', choices=['sync', 'status'])
     parser.add_argument('ecosystem', choices=SOURCES)
     args = parser.parse_args()
     cache = Path(os.environ.get('XDG_CACHE_HOME', Path.home() / '.cache')) / 'opencode/nox-workspace/nox-extension-developer'
     try:
-        print(json.dumps(sync(args.ecosystem, cache), indent=2, ensure_ascii=False))
+        if args.action == 'status':
+            print(json.dumps(status(args.ecosystem, cache), indent=2, ensure_ascii=False))
+        else:
+            print(json.dumps(sync(args.ecosystem, cache), indent=2, ensure_ascii=False))
     except RuntimeError as exc:
         parser.exit(1, f'{exc}\n')
 

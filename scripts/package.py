@@ -13,10 +13,16 @@ FILES = (
     'CONTRIBUTING.md', 'CONTRIBUTING.en.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md',
     'assets/nox-emblem.webp', 'docs/pt-BR/guia.md', 'docs/en/guide.md',
     'docs/pt-BR/dependencias.md', 'docs/en/dependencies.md', 'docs/pt-BR/android-sdk.md', 'docs/en/android-sdk.md',
+    'docs/pt-BR/matriz-1000.md', 'docs/en/matrix-1000.md',
     'prompts/install-pt-BR.txt', 'prompts/install-en.txt',
     'scripts/install.py', 'scripts/references.py', 'scripts/api_compare.py', 'scripts/package.py',
-    'references/api-contracts.md', 'tests/test_api_compare.py', 'tests/test_install.py',
-    'tests/test_package.py', 'tests/test_references.py',
+    'scripts/nox.py', 'scripts/nox_core.py', 'scripts/nox_env.py', 'scripts/nox_lab.py',
+    'scripts/nox_android.py', 'scripts/nox_issues.py', 'scripts/nox_matrix.py', 'scripts/nox_scaffold.py',
+    'scripts/nox_enhancements.py',
+    'references/api-contracts.md', 'references/catalog-1000.json', 'references/matrix-1000.json',
+    'tests/test_api_compare.py', 'tests/test_install.py', 'tests/test_package.py', 'tests/test_references.py',
+    'tests/test_nox_core_and_env.py', 'tests/test_nox_lab.py', 'tests/test_nox_android_and_issues.py', 'tests/test_nox_cli_and_matrix.py',
+    'tests/test_nox_scaffold.py', 'tests/test_nox_enhancements.py',
 )
 
 

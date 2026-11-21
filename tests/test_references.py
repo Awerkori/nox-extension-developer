@@ -215,6 +215,15 @@ class Snapshots(unittest.TestCase):
                 ref.resolve('example/repo', timeout=0.5)
         self.assertLess(time.monotonic() - start, 5)
 
+    def test_status_reports_cached_freshness_without_network(self):
+        missing = ref.status('keiyoushi', self.root)
+        self.assertEqual(missing['status'], 'MISSING')
+        self.sync('keiyoushi', 'a')
+        st = ref.status('keiyoushi', self.root)
+        self.assertEqual(st['status'], 'verified_cached')
+        self.assertEqual(st['commit'], 'a' * 40)
+        self.assertFalse(st['is_stale'])
+
 
 if __name__ == '__main__':
     unittest.main()

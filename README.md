@@ -152,12 +152,28 @@ Tutoriais completos por sistema operacional (**Windows via WSL**, **Arch Linux**
 
 ## Documentação
 
-- [Guia completo de instalação, uso e solução de problemas](docs/pt-BR/guia.md) ([English](docs/en/guide.md))
+- [Guia completo de instalação, CLI `nox.py`, APK Debug/ADB e solução de problemas](docs/pt-BR/guia.md) ([English](docs/en/guide.md))
 - [Dependências por ferramenta](docs/pt-BR/dependencias.md) ([English](docs/en/dependencies.md))
 - [Instalação segura do Android SDK](docs/pt-BR/android-sdk.md) ([English](docs/en/android-sdk.md))
+- [Matriz de rastreabilidade e contadores (`0001`–`1200`)](docs/pt-BR/matriz-1000.md) ([English](docs/en/matrix-1000.md)) · [Catálogo JSON (`0001`–`1000`)](references/catalog-1000.json) · [Matriz JSON validada](references/matrix-1000.json)
 - [Compatibilidade com agentes e sistemas](COMPATIBILIDADE.md)
 - [Segurança e limites operacionais](SEGURANCA.md) · [Política de reporte (`SECURITY.md`)](SECURITY.md)
 - [Contratos e comparação de APIs](references/api-contracts.md)
+
+## Ferramentas locais e verificação baseada em evidências
+
+Para usuários iniciantes, basta um pedido em linguagem natural (como os exemplos acima). Para desenvolvedores e agentes, a CLI local [`scripts/nox.py`](scripts/nox.py) oferece comandos modulares sem daemon permanente:
+
+- `python3 scripts/nox.py doctor` — diagnostica JDK, Android SDK, Node.js, Git, Python e ADB (separando ferramenta ausente de instalação quebrada).
+- `python3 scripts/nox.py inspect <caminho>` — identifica ecossistema (`keiyoushi`/`yuzono`/`lnreader`), arquitetura moderna (`KeiSource`/`AniSource`/KSP) ou legada e calcula `sourceId` determinístico.
+- `python3 scripts/nox.py lab <image|manga|anime|novel|search>` — verifica bytes reais de imagem (rejeitando HTTP 200 HTML falso), capítulos fracionários (`59.5`), separação `getHosterList`/`getVideoList` e HLS/DRM, legibilidade LNReader e busca positiva real.
+- `python3 scripts/nox.py apk-inspect <arquivo.apk>` & `python3 scripts/nox.py adb <doctor|filter-logcat>` — valida SHA-256, pacote, certificado Debug vs Release e filtra Logcat por pacote/PID com redação de tokens.
+- `python3 scripts/nox.py issues <classify|correlate|fetch>` & `python3 scripts/nox.py security-audit <repo>` — classifica PRs (`VERIFIED_FIX` vs `REVERTED_FIX`/`OPEN_OR_UNMERGED`), consulta issues/PRs reais no GitHub e audita segurança Gradle/TLS/DexClassLoader/Trojan Source antes de compilar (`nox.py build`).
+- `python3 scripts/nox.py scaffold` & `python3 scripts/nox.py scenarios` — gera extensões Keiyoushi/Yuzono/LNReader no padrão oficial e valida criação, reparo (antes→depois) e atualização de identidade contra servidor HTTP local.
+- `python3 scripts/nox.py benchmark` & `python3 scripts/nox.py matrix --validate` — mede o benchmark dinâmico Nível 1 vs `v1.0.3` real + Nível 2 HTTP (`PASS`) e valida a matriz bidimensional `0001`–`1200` (`1.000` originais + `200` autônomas).
+- `python3 scripts/nox.py autofix-diagnose <alvo> --symptom "<erro>"` & `python3 scripts/nox.py review-council <alvo> --enabled` — diagnostica bugs com base em precedentes reais Keiyoushi/Yuzono/LNReader filtrando PRs não-merged e executa conselho de revisão 4-papéis sobre o código real.
+
+Todos os relatórios distinguem explicitamente **`PASS` / `FAIL` / `INCONCLUSIVE` / `BLOCKED` / `NOT_RUN`**: compilação não prova funcionamento em site real, e testes no Android físico só são marcados quando um aparelho autorizado estiver conectado.
 
 ## Perguntas frequentes
 

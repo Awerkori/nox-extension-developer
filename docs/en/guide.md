@@ -130,3 +130,45 @@ Agent sources: [OpenCode](https://opencode.ai/docs/skills/), [Codex](https://dev
 - **Build failure:** check versions and dependencies required by the target project, licenses, and logs. Do not install components or accept licenses without authorization.
 
 To test the scripts in this package, run `python3 -m unittest discover -s tests -v` in the skill directory, or use the local Python 3 command on Windows. This does not prove compatibility with untested agents, systems, or sites.
+
+## Modular CLI (`scripts/nox.py`), Debug APK, ADB & Logcat
+
+### Core CLI commands
+
+```sh
+python3 scripts/nox.py doctor
+python3 scripts/nox.py inspect <module-path>
+python3 scripts/nox.py search-existing <repo> <url-or-name>
+python3 scripts/nox.py security-audit <repo-path>
+python3 scripts/nox.py references status keiyoushi
+python3 scripts/nox.py site-inspect <sample.html> --url https://example.org
+python3 scripts/nox.py lab image <page.bin> --content-type image/jpeg
+python3 scripts/nox.py lab visual-diff <before.png> <after.png>
+python3 scripts/nox.py lab metadata <page.html>
+python3 scripts/nox.py lab dash <manifest.mpd> --kind mpd
+python3 scripts/nox.py issues verify-historical
+python3 scripts/nox.py autofix-diagnose <target> --symptom "<error>"
+python3 scripts/nox.py review-council <target> --enabled
+python3 scripts/nox.py apk-inspect <path/app-debug.apk>
+python3 scripts/nox.py api-binary-compare <old.jar> <new.jar>
+python3 scripts/nox.py deeplink-check <build.gradle.kts> https://example.org/manga/1
+python3 scripts/nox.py adb doctor
+python3 scripts/nox.py adb ui-plan --package app.mihon --source Source --query Query
+python3 scripts/nox.py adb filter-logcat <log.txt> --package eu.kanade.tachiyomi.extension.en.example
+python3 scripts/nox.py enhance --audit-source <source.kt> --ecosystem keiyoushi
+python3 scripts/nox.py bisect <repo> <good> <bad> --test-cmd "pytest -q"
+python3 scripts/nox.py benchmark
+python3 scripts/nox.py matrix --validate
+```
+
+### Quick guide: Debug APK, USB/Wi-Fi ADB & sanitized Logcat
+
+1. **Debug build:** always use the target repository's Gradle Wrapper (e.g., `./gradlew :src:en:example:assembleDebug`), after running `nox.py security-audit` on any untrusted external repo/PR.
+2. **APK inspection:** run `python3 scripts/nox.py apk-inspect <path.apk>` to verify package name, `versionCode`, SHA-256, and signing certificate (`Debug` vs `Release`). A Debug APK cannot upgrade an existing APK signed with a different key without explicit user consent; the skill **never** uninstalls apps automatically.
+3. **ADB connection (USB or Wi-Fi):**
+   - Enable **Developer Options** and **USB Debugging** (or **Wireless Debugging** on Android 11+, pairing via `adb pair <ip:port>` — never paste pairing codes into logs).
+   - Run `python3 scripts/nox.py adb doctor`. With multiple devices, pass `--serial <id>`. If `unauthorized`, accept the RSA prompt on the device screen.
+4. **Safe Logcat capture:** capture logs during the reproduction window without clearing existing buffers (`adb logcat -d -v threadtime > /tmp/nox-logcat.txt`) and isolate by package/PID via `python3 scripts/nox.py adb filter-logcat /tmp/nox-logcat.txt --package <pkg>`. The filter automatically redacts tokens/cookies and ignores `AndroidRuntime` crashes from unrelated packages. `NoxExt` is an optional diagnostic tag convention, not a guaranteed native Mihon tag.
+5. **No device attached:** when `adb devices` is empty, device checks are reported honestly as `NOT_RUN` (or `BLOCKED`), never as `PASS`.
+
+See also the [Traceability Matrix 0001–1200](matrix-1000.md).

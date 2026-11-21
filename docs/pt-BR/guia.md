@@ -130,3 +130,45 @@ Fontes dos agentes: [OpenCode](https://opencode.ai/docs/skills/), [Codex](https:
 - **Build falha:** confira as versões e dependências exigidas pelo projeto de destino, licenças e logs. Não instale nem aceite licenças sem autorização.
 
 Para testar os scripts neste pacote, execute `python3 -m unittest discover -s tests -v` no diretório da skill, ou use o comando Python 3 local no Windows. Isso não comprova compatibilidade com agentes, sistemas ou sites não testados.
+
+## CLI modular (`scripts/nox.py`), APK Debug, ADB e Logcat
+
+### Comandos principais da CLI
+
+```sh
+python3 scripts/nox.py doctor
+python3 scripts/nox.py inspect <caminho-do-modulo>
+python3 scripts/nox.py search-existing <repo> <url-ou-nome>
+python3 scripts/nox.py security-audit <caminho-do-repo>
+python3 scripts/nox.py references status keiyoushi
+python3 scripts/nox.py site-inspect <amostra.html> --url https://exemplo.org
+python3 scripts/nox.py lab image <pagina.bin> --content-type image/jpeg
+python3 scripts/nox.py lab visual-diff <antes.png> <depois.png>
+python3 scripts/nox.py lab metadata <pagina.html>
+python3 scripts/nox.py lab dash <manifest.mpd> --kind mpd
+python3 scripts/nox.py issues verify-historical
+python3 scripts/nox.py autofix-diagnose <alvo> --symptom "<erro>"
+python3 scripts/nox.py review-council <alvo> --enabled
+python3 scripts/nox.py apk-inspect <caminho/app-debug.apk>
+python3 scripts/nox.py api-binary-compare <antigo.jar> <novo.jar>
+python3 scripts/nox.py deeplink-check <build.gradle.kts> https://exemplo.org/manga/1
+python3 scripts/nox.py adb doctor
+python3 scripts/nox.py adb ui-plan --package app.mihon --source Fonte --query Busca
+python3 scripts/nox.py adb filter-logcat <log.txt> --package eu.kanade.tachiyomi.extension.pt.exemplo
+python3 scripts/nox.py enhance --audit-source <arquivo.kt> --ecosystem keiyoushi
+python3 scripts/nox.py bisect <repo> <good> <bad> --test-cmd "pytest -q"
+python3 scripts/nox.py benchmark
+python3 scripts/nox.py matrix --validate
+```
+
+### Guia rápido: APK Debug, USB/Wi-Fi ADB e coleta de logs
+
+1. **Compilação Debug:** use sempre o Gradle Wrapper do repositório alvo (ex.: `./gradlew :src:pt:exemplo:assembleDebug`), nunca antes de auditar PRs externos com `nox.py security-audit`.
+2. **Inspeção do APK:** execute `python3 scripts/nox.py apk-inspect <caminho.apk>` para conferir pacote, `versionCode`, SHA-256 e certificado (`Debug` vs `Release`). Um APK Debug não substitui uma instalação assinada com outra chave sem consentimento explícito; a skill **nunca** desinstala aplicativos automaticamente.
+3. **Conexão ADB (USB ou Wi-Fi):**
+   - Ative **Opções do desenvolvedor** e **Depuração USB** (ou **Depuração por Wi-Fi** no Android 11+, pareando via `adb pair <ip:porta>` — nunca compartilhe códigos de pareamento em logs).
+   - Rode `python3 scripts/nox.py adb doctor`. Se houver 2+ dispositivos, informe `--serial <id>`. Se aparecer `unauthorized`, aceite a chave RSA na tela do aparelho.
+4. **Coleta segura de Logcat:** capture logs apenas durante a janela de reprodução sem apagar o histórico existente (`adb logcat -d -v threadtime > /tmp/nox-logcat.txt`) e filtre por pacote/PID com `python3 scripts/nox.py adb filter-logcat /tmp/nox-logcat.txt --package <pacote>`. O filtro aplica redação automática de tokens/cookies e evita atribuir à extensão um crash (`AndroidRuntime`) de outro aplicativo. A tag `NoxExt` é apenas uma convenção opcional de diagnóstico, não um recurso nativo garantido do Mihon.
+5. **Ausência de dispositivo:** quando `adb devices` estiver vazio, o relatório marca o teste no aparelho como `NOT_RUN` (ou `BLOCKED`), sem falsos `PASS`.
+
+Consulte também a [Matriz de Rastreabilidade 0001–1200](matriz-1000.md).
