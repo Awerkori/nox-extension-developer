@@ -2,7 +2,7 @@
 
 ## 2.0.0
 
-Major local engineering upgrade (`1,200` traced items: `1,000` original catalog requirements + `200` autonomous enhancements) pending owner review via Pull Request before tagging/release:
+Major local engineering upgrade (`1,200` traced items: `1,000` original catalog requirements + `200` autonomous enhancements):
 
 - **Modular local CLI (`scripts/nox.py`) & core evidence engine (`scripts/nox_core.py`):**
   - Added strict evidence statuses (`PASS`, `FAIL`, `INCONCLUSIVE`, `BLOCKED`, `NOT_RUN`), SHA-256 execution receipts, unsupported-claim gate, `nox.py report`, and `nox.py verify-report`.
